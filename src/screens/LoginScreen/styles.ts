@@ -14,11 +14,13 @@ export const styles = StyleSheet.create({
     width: 180,
     height: 180,
     resizeMode: 'contain',
-    marginBottom: 24
+    marginBottom: 24,
+    marginTop: 40
   },
   titleContainer: {
     alignItems: 'center',
-    marginBottom: 24
+    marginBottom: 34,
+    marginTop: 40
   },
   titleMain: {
     fontSize: 26,
@@ -48,7 +50,8 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 8
+    marginTop: 30,
+    elevation: 2
   },
   buttonText: {
     color: '#fff',
@@ -62,6 +65,21 @@ export const styles = StyleSheet.create({
   },
   link: {
     color: '#3B82F6',
-    fontWeight: 'bold'
+    fontWeight: 'bold', 
+  },
+  passwordContainer: {
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    height: 48,
+    marginBottom: 12
+  },
+  inputPassword: {
+    flex: 1,
+    fontSize: 16,
+    color: '#000'
   }
 })
