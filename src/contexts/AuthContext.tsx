@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { createContext, useContext, useEffect, useState } from "react"
+import Toast from "react-native-toast-message"
 
 
 interface User {
@@ -58,6 +59,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     setUser(null)
     setToken(null)
+
+    Toast.show({
+      type: 'info',
+      text1: 'Logout realizado com sucesso.',
+    });
+
   }
 
   return (

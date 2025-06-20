@@ -1,39 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import Toast from 'react-native-toast-message';
-import { AuthProvider } from './src/contexts/AuthContext';
-import { useEffect, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { TelasPrivadas } from './src/navigation/pages-privada';
-import { TelasPublica } from './src/navigation/pages-publicas';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// App.tsx
+import { NavigationContainer } from "@react-navigation/native";
+import { AuthProvider, useAuth } from "./src/contexts/AuthContext";
+import { TelasPrivadas } from "./src/navigation/pages-privada";
+import { ActivityIndicator } from "react-native";
+import { TelasPublica } from "./src/navigation/pages-publicas";
 
-export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [loading, setLoading] = useState(true)
+function Rotas() {
+  const { token, isLoading } = useAuth();
 
-  useEffect(() => {
-    async function loadStorageData() {
-      const token = await AsyncStorage.getItem('@token')
-      setIsAuthenticated(!!token)
-      setLoading(false)
-    }
+  if (isLoading) return <ActivityIndicator size="large" />;
 
-    loadStorageData()
-  }, [])
-
-  if (loading) {
-    return null 
-  }
-
-
-  return (
-    <AuthProvider>
-      <NavigationContainer>
-        {isAuthenticated ? <TelasPrivadas /> : <TelasPublica />}
-      </NavigationContainer>
-      <Toast />
-    </AuthProvider>
-  )
+  return token ? <TelasPrivadas /> : <TelasPublica />;
 }
 
+export default function App() {
+  return (
+    <NavigationContainer>
+      <AuthProvider>
+        <Rotas />
+      </AuthProvider>
+    </NavigationContainer>
+  );
+}

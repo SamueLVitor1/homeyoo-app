@@ -1,4 +1,4 @@
-import { Text, TextInput, TouchableOpacity, View, ScrollView } from "react-native"
+import { Text, TextInput, TouchableOpacity, View, ScrollView, ActivityIndicator } from "react-native"
 import { styles } from "./styles"
 import { LinearGradient } from 'expo-linear-gradient'
 import { Image } from "react-native"
@@ -9,23 +9,25 @@ import { Controller, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { loginUser } from "../../services/login-service"
 import Toast from 'react-native-toast-message'
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import { useNavigation } from "@react-navigation/native"
-import { NativeStackNavigationProp } from "@react-navigation/native-stack"
-import { StackRoutes } from "../../navigation/AppNavigator"
+
 import { useAuth } from "../../contexts/AuthContext"
+
+type StackRoutes = {
+  Home: undefined;
+};
 
 const formSchema = z.object({
   email: z.string().email("Email inválido"),
   senha: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
 })
 
+
 type FormData = z.infer<typeof formSchema>
 
 export function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false)
-  const navigation = useNavigation<NativeStackNavigationProp<StackRoutes>>()
   const { signIn } = useAuth()
+  const [isLoading, setIsLoading] = useState(false)
 
   const {
     control,
@@ -36,6 +38,8 @@ export function LoginScreen() {
   })
 
   const onSubmit = async (data: FormData) => {
+    setIsLoading(true)
+
     try {
       const response = await loginUser(data)
       Toast.show({
@@ -47,8 +51,6 @@ export function LoginScreen() {
       const { token, usuario } = response
 
       await signIn({ token, user: usuario })
-
-      navigation.navigate("Home")
       console.log('Logado com sucesso:', response)
 
     } catch (error: any) {
@@ -59,6 +61,8 @@ export function LoginScreen() {
         text2: 'Verifique seu email e senha',
         position: 'bottom'
       })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -109,9 +113,16 @@ export function LoginScreen() {
             )}
           />
           {errors.senha && <Text style={{ color: 'red' }}>{errors.senha.message}</Text>}
-
-          <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
-            <Text style={styles.buttonText}>Entrar</Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleSubmit(onSubmit)}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.buttonText}>Entrar</Text>
+            )}
           </TouchableOpacity>
         </View>
 
