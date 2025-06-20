@@ -9,6 +9,11 @@ import { Controller, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { loginUser } from "../../services/login-service"
 import Toast from 'react-native-toast-message'
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useNavigation } from "@react-navigation/native"
+import { NativeStackNavigationProp } from "@react-navigation/native-stack"
+import { StackRoutes } from "../../navigation/AppNavigator"
+import { useAuth } from "../../contexts/AuthContext"
 
 const formSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -19,6 +24,8 @@ type FormData = z.infer<typeof formSchema>
 
 export function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false)
+  const navigation = useNavigation<NativeStackNavigationProp<StackRoutes>>()
+  const { signIn } = useAuth()
 
   const {
     control,
@@ -36,6 +43,12 @@ export function LoginScreen() {
         text1: 'Login realizado com sucesso!',
         position: 'bottom'
       })
+
+      const { token, usuario } = response
+
+      await signIn({ token, user: usuario })
+
+      navigation.navigate("Home")
       console.log('Logado com sucesso:', response)
 
     } catch (error: any) {
