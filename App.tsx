@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from "./src/contexts/AuthContext";
 import { TelasPrivadas } from "./src/navigation/pages-privada";
 import { ActivityIndicator } from "react-native";
 import { TelasPublica } from "./src/navigation/pages-publicas";
+import Toast from "react-native-toast-message";
 
 function Rotas() {
   const { token, isLoading } = useAuth();
@@ -19,6 +20,7 @@ export default function App() {
       <AuthProvider>
         <Rotas />
       </AuthProvider>
+      <Toast />
     </NavigationContainer>
   );
 }

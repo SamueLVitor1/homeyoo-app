@@ -11,6 +11,7 @@ import { loginUser } from "../../services/login-service"
 import Toast from 'react-native-toast-message'
 
 import { useAuth } from "../../contexts/AuthContext"
+import { useNavigation } from "@react-navigation/native"
 
 type StackRoutes = {
   Home: undefined;
@@ -28,6 +29,9 @@ export function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false)
   const { signIn } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
+
+
+  const navigation = useNavigation()
 
   const {
     control,
@@ -129,7 +133,11 @@ export function LoginScreen() {
         <Text style={styles.register}>
           Ainda não possui conta?
         </Text>
-        <Text style={styles.link}>Crie uma nova conta aqui</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
+          <Text style={styles.link}>Crie uma nova conta aqui</Text>
+        </TouchableOpacity>
+
+
       </ScrollView>
     </LinearGradient>
   )
