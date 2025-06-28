@@ -4,7 +4,7 @@ interface LoginData {
   nome: string,
   email: string,
   senha: string,
-  avatar?: string,
+  avatar: string | null,
 }
 
 export async function criarUsuario(data: LoginData) {

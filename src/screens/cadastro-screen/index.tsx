@@ -46,7 +46,8 @@ export function CadastroScreen() {
   const {
     control,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = useForm<FormData>({
     resolver: zodResolver(formSchema)
   })
@@ -61,14 +62,17 @@ export function CadastroScreen() {
 
     setIsLoading(true)
     try {
-      const response = await criarUsuario(data)
-      await signIn({ token: response.token, user: response.usuario })
+      const response = await criarUsuario(body)
 
       Toast.show({
         type: 'success',
         text1: 'Conta criada com sucesso!',
         position: 'bottom'
       })
+
+      reset()
+      setAvatarSelecionado(null)
+      navigation.navigate('Login')
       setIsLoading(false)
     } catch (error: any) {
       Toast.show({
