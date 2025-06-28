@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native"
 
 import { useAuth } from "../../contexts/AuthContext"
 import { criarUsuario } from "../../services/criar-usuario"
+import { PrimaryButton } from "../../components/primary-button"
 // import { loginUser } from "../../services/login-service" // depois você troca pelo createUser
 
 const formSchema = z.object({
@@ -195,14 +196,11 @@ export function CadastroScreen() {
           </ScrollView>
 
 
-          {/* Botão */}
-          <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)} disabled={isLoading}>
-            {isLoading ? (
-              <ActivityIndicator color="#FFF" />
-            ) : (
-              <Text style={styles.buttonText}>Criar Conta</Text>
-            )}
-          </TouchableOpacity>
+          {isLoading ? (
+            <ActivityIndicator color="#22C55E" style={{ marginTop: 16 }} />
+          ) : (
+            <PrimaryButton title="Criar Conta" onPress={handleSubmit(onSubmit)} />
+          )}
         </View>
 
         {/* Link login */}

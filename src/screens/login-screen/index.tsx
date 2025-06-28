@@ -12,6 +12,7 @@ import Toast from 'react-native-toast-message'
 
 import { useAuth } from "../../contexts/AuthContext"
 import { useNavigation } from "@react-navigation/native"
+import { PrimaryButton } from "../../components/primary-button"
 
 type StackRoutes = {
   Home: undefined;
@@ -117,17 +118,11 @@ export function LoginScreen() {
             )}
           />
           {errors.senha && <Text style={{ color: 'red' }}>{errors.senha.message}</Text>}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleSubmit(onSubmit)}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <ActivityIndicator color="#fff" />
-            ) : (
-              <Text style={styles.buttonText}>Entrar</Text>
-            )}
-          </TouchableOpacity>
+          {isLoading ? (
+            <ActivityIndicator color="#22C55E" style={{ marginTop: 16 }} />
+          ) : (
+            <PrimaryButton title="Entrar" onPress={handleSubmit(onSubmit)} />
+          )}
         </View>
 
         <Text style={styles.register}>
