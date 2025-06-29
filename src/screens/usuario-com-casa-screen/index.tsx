@@ -6,7 +6,6 @@ export function UsuarioComCasa({ casa }: any) {
       <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
         casa
       </Text>
-
     </View>
   )
 }
