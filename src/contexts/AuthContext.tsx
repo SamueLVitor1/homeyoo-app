@@ -71,9 +71,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       type: 'info',
       text1: 'Logout realizado com sucesso.',
     });
-
   }
-
 
 
   return (

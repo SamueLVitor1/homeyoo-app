@@ -1,9 +1,34 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
 import { styles } from './styles'
 import { Feather } from '@expo/vector-icons'
+import { useAuth } from '../../contexts/AuthContext'
+import { useEffect, useState } from 'react'
+import { buscarMembrosCasa } from '../../services/buscar-membros'
 
 export function UsuarioComCasa() {
-  // Dados mock
+  const { user, token } = useAuth()
+  const houseId = user?.casas?.[0]?.house_id // pega a primeira casa do user
+
+  const [membros, setMembros] = useState([])
+  const [loading, setLoading] = useState(true)
+
+
+  useEffect(() => {
+    if (!houseId || !token) return
+
+    async function fetchMembros() {
+      try {
+        const data = await buscarMembrosCasa(houseId)
+        console.log(data)
+        setMembros(data.membros) // ajuste aqui se vier data.membros
+      } catch (err) {
+        setMembros([])
+      }
+      setLoading(false)
+    }
+    fetchMembros()
+  }, [houseId, token])
+
   const casa = {
     nome: 'Casa Legal',
     codigo: '#B3up1',
@@ -21,7 +46,7 @@ export function UsuarioComCasa() {
     ranking: [
       { nome: 'Alex', xp: 87, avatar: 'https://i.pravatar.cc/150?img=5' },
       { nome: 'Emma', xp: 110, avatar: 'https://i.pravatar.cc/150?img=8' },
-      { nome: 'Anna', xp: 57, avatar: 'https://i.pravatar.cc/150?img=9'  }
+      { nome: 'Anna', xp: 57, avatar: 'https://i.pravatar.cc/150?img=9' }
     ],
     metaXp: 200
   }
@@ -46,12 +71,24 @@ export function UsuarioComCasa() {
           </Text>
           {/* Membros */}
           <View style={styles.membrosContainer}>
-            {casa.membros.map((m, i) => (
-              <View key={i} style={styles.membroItem}>
-                <Image source={m.avatar} style={styles.avatar} />
-                <Text>{m.nome}</Text>
-              </View>
-            ))}
+            {loading ? (
+              <Text>Carregando...</Text>
+            ) : (
+              membros.map((m: any, i: number) => (
+                <View key={i} style={styles.membroItem}>
+                  {/* Se avatar for vazio, coloca imagem default */}
+                  <Image
+                    source={
+                      m.avatar
+                        ? { uri: m.avatar }
+                        : require('../../assets/profile-icon-default.png')
+                    }
+                    style={styles.avatar}
+                  />
+                  <Text>{m.nome}</Text>
+                </View>
+              ))
+            )}
           </View>
 
           {/* Tarefas */}
