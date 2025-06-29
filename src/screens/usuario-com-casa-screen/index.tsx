@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { buscarMembrosCasa } from '../../services/buscar-membros'
 import { buscarCasaId } from '../../services/buscar-casa-id'
 import { ModalNovaTarefa } from '../../components/modal-nova-tarefa'
+import { buscarTarefasCasa } from '../../services/buscar-tarefas-casa'
 
 export function UsuarioComCasa() {
   const { user } = useAuth()
@@ -14,7 +15,9 @@ export function UsuarioComCasa() {
 
   const [caasa, setCasa] = useState<any>(null)
   const [membros, setMembros] = useState([])
+  const [tarefas, setTarefas] = useState([])
   const [loading, setLoading] = useState(true)
+  const [loadingTarefas, setLoadingTarefas] = useState(true)
   const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
@@ -44,6 +47,16 @@ export function UsuarioComCasa() {
     fetchCasa()
     fetchMembros()
   }, [houseId])
+
+  useEffect(() => {
+    if (!houseId) return
+
+    setLoadingTarefas(true)
+    buscarTarefasCasa(houseId)
+      .then(data => setTarefas(data))
+      .catch(() => setTarefas([]))
+      .finally(() => setLoadingTarefas(false))
+  }, [houseId, showModal])
 
   const casa = {
     nome: 'Casa Legal',
@@ -107,6 +120,7 @@ export function UsuarioComCasa() {
 
           {/* Tarefas */}
 
+          {/* Tarefas */}
           <View style={styles.tarefasContainer}>
             <Text style={styles.sectionTitle}>Tarefas</Text>
             {papel === 'admin' && (
@@ -116,19 +130,60 @@ export function UsuarioComCasa() {
               </TouchableOpacity>
             )}
 
-            {casa.tarefas.map((t, i) => (
-              <View key={i} style={styles.tarefaItem}>
-                <View>
-                  <Text style={styles.tituloTarefa}>{t.titulo}</Text>
-                  <View style={styles.responsavelContainer}>
-                    <Image source={t.avatar} style={styles.responsavelImg} />
-                    <Text>{t.responsavel}</Text>
-                  </View>
+            {loadingTarefas ? (
+              <Text>Carregando tarefas...</Text>
+            ) : tarefas.length === 0 ? (
+              <Text style={{ color: '#aaa', marginVertical: 12 }}>Nenhuma tarefa encontrada</Text>
+            ) : (
+              tarefas.map((t: any, i: number) => {
+                const isAtrasado = new Date(t.data_limite) < new Date() && t.status !== 'concluida';
 
-                </View>
-                <Text style={{ color: t.status === 'Atrasado' ? 'red' : 'green' }}>{t.status}</Text>
-              </View>
-            ))}
+                return (
+
+                  <View key={t._id || i} style={styles.tarefaItem}>
+                    <View>
+                      <Text style={styles.tituloTarefa}>{t.tarefa_id?.nome || 'Tarefa'}</Text>
+                      <View style={styles.responsavelContainer}>
+                        {t.responsavel_id?.avatar ? (
+                          <Image
+                            source={{ uri: t.responsavel_id.avatar }}
+                            style={styles.responsavelImg}
+                          />
+                        ) : (
+                          <Image
+                            source={require('../../assets/profile-icon-default.png')}
+                            style={styles.responsavelImg}
+                          />
+                        )}
+                        <Text>{t.responsavel_id?.nome || '-'}</Text>
+                      </View>
+                    </View>
+                    <View style={{ alignItems: 'flex-end' }}>
+                      {isAtrasado ? (
+                        <View style={styles.badgeAtrasado}>
+                          <Text style={styles.badgeAtrasadoText}>Atrasado</Text>
+                        </View>
+                      ) : (
+                        <Text style={styles.badgePendente}>
+                          <Text style={styles.badgePendenteText}>
+                            {t.status.charAt(0).toUpperCase() + t.status.slice(1)}
+
+
+                          </Text>
+                        </Text>
+                      )}
+
+                      <Text style={{ fontSize: 12, color: '#888' }}>
+                        até {new Date(t.data_limite).toLocaleDateString('pt-BR')}
+                      </Text>
+                      <Text style={{ fontSize: 12, color: '#4834d4', fontWeight: 'bold' }}>
+                        +{t.pontuacao}xp
+                      </Text>
+                    </View>
+                  </View>
+                );
+              })
+            )}
           </View>
 
           {/* Rankeamento */}

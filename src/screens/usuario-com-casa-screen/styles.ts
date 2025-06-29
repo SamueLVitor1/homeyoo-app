@@ -180,4 +180,30 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#111827'
   },
+  badgeAtrasado: {
+    backgroundColor: '#ffd5d5',   // rosa clarinho
+    paddingHorizontal: 14,
+    paddingVertical: 4,
+    borderRadius: 16,
+    alignSelf: 'flex-start',
+    marginTop: 2,
+  },
+  badgeAtrasadoText: {
+    color: '#312929',
+    fontWeight: '500',
+    fontSize: 15,
+  },
+  badgePendente: {
+    backgroundColor: '#fef9c3',   // rosa clarinho
+    paddingHorizontal: 14,
+    paddingVertical: 4,
+    borderRadius: 16,
+    alignSelf: 'flex-start',
+    marginTop: 2,
+  },
+  badgePendenteText: {
+    color: '#312929',
+    fontWeight: '500',
+    fontSize: 15,
+  }
 })
