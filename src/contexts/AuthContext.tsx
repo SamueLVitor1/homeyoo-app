@@ -15,6 +15,7 @@ interface AuthContextData {
   isLoading: boolean
   signIn: (data: { token: string; user: any }) => Promise<void>
   signOut: () => Promise<void>
+  atualizarUsuario: (user: any) => void
 }
 
 
@@ -40,6 +41,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     loadStorageData()
   }, [])
+
+  function atualizarUsuario(novoUsuario: any) {
+    setUser(novoUsuario)
+  }
 
   async function signIn(data: { token: string; user: any }) {
     setUser(data.user)
@@ -69,8 +74,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   }
 
+
+
   return (
-    <AuthContext.Provider value={{ user, token, isLoading, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        token,
+        isLoading,
+        signIn,
+        signOut,
+        atualizarUsuario
+      }}>
       {children}
     </AuthContext.Provider>
   )

@@ -54,4 +54,11 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
   },
+  errorText: {
+    color: '#dc2626',
+    fontSize: 13,
+    marginTop: -6,
+    marginBottom: 6,
+    alignSelf: 'flex-start',
+  }
 })
