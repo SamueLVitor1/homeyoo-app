@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     width: 110,
     elevation: 2,
+    justifyContent: 'space-between'
   },
   label: {
     fontWeight: '600',
