@@ -4,17 +4,19 @@ import { Feather } from '@expo/vector-icons'
 import { useAuth } from '../../contexts/AuthContext'
 import { useEffect, useState } from 'react'
 import { buscarMembrosCasa } from '../../services/buscar-membros'
+import { buscarCasaId } from '../../services/buscar-casa-id'
 
 export function UsuarioComCasa() {
-  const { user, token } = useAuth()
+  const { user } = useAuth()
   const houseId = user?.casas?.[0]?.house_id // pega a primeira casa do user
 
+  const [caasa, setCasa] = useState<any>(null)
   const [membros, setMembros] = useState([])
   const [loading, setLoading] = useState(true)
 
 
   useEffect(() => {
-    if (!houseId || !token) return
+    if (!houseId) return
 
     async function fetchMembros() {
       try {
@@ -26,17 +28,24 @@ export function UsuarioComCasa() {
       }
       setLoading(false)
     }
+
+    async function fetchCasa() {
+      try {
+        const data = await buscarCasaId(houseId)
+        setCasa(data.casa.casa)
+      } catch (err) {
+        setCasa(null)
+      }
+      setLoading(false)
+    }
+
+    fetchCasa()
     fetchMembros()
-  }, [houseId, token])
+  }, [houseId])
 
   const casa = {
     nome: 'Casa Legal',
     codigo: '#B3up1',
-    membros: [
-      { nome: 'Alex', avatar: require('../../assets/icon-exemple.png') },
-      { nome: 'Anna', avatar: require('../../assets/icon-exemple.png') },
-      { nome: 'Emma', avatar: require('../../assets/icon-exemple.png') }
-    ],
     tarefas: [
       { titulo: 'Tarefa exemplo', responsavel: 'Anna', status: 'Em andamento', avatar: require('../../assets/icon-exemple.png') },
       { titulo: 'Tarefa exemplo', responsavel: 'Anna', status: 'Atrasado', avatar: require('../../assets/icon-exemple.png') },
@@ -51,6 +60,9 @@ export function UsuarioComCasa() {
     metaXp: 200
   }
 
+  if (loading || !casa) return <Text>Carregando...</Text>
+
+
   return (
     <ScrollView style={styles.container}>
       <View style={{ backgroundColor: "#add9b6", flex: 1 }}>
@@ -62,8 +74,8 @@ export function UsuarioComCasa() {
 
         <View style={styles.content}>
           <View style={styles.header}>
-            <Text style={styles.nomeCasa}>{casa.nome}</Text>
-            <Text style={styles.codigoCasa}>{casa.codigo}</Text>
+            <Text style={styles.nomeCasa}>{caasa.nome}</Text>
+            <Text style={styles.codigoCasa}>#{caasa.codigo}</Text>
           </View>
 
           <Text style={styles.sectionTitle}>
