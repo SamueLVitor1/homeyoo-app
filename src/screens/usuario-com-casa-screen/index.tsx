@@ -7,6 +7,7 @@ import { buscarMembrosCasa } from '../../services/buscar-membros'
 import { buscarCasaId } from '../../services/buscar-casa-id'
 import { ModalNovaTarefa } from '../../components/modal-nova-tarefa'
 import { buscarTarefasCasa } from '../../services/buscar-tarefas-casa'
+import { TarefaItem } from '../../components/tarefa-item'
 
 export function UsuarioComCasa() {
   const { user } = useAuth()
@@ -120,7 +121,6 @@ export function UsuarioComCasa() {
 
           {/* Tarefas */}
 
-          {/* Tarefas */}
           <View style={styles.tarefasContainer}>
             <Text style={styles.sectionTitle}>Tarefas</Text>
             {papel === 'admin' && (
@@ -136,52 +136,14 @@ export function UsuarioComCasa() {
               <Text style={{ color: '#aaa', marginVertical: 12 }}>Nenhuma tarefa encontrada</Text>
             ) : (
               tarefas.map((t: any, i: number) => {
-                const isAtrasado = new Date(t.data_limite) < new Date() && t.status !== 'concluida';
-
+                const isAtrasado = new Date(t.data_limite) < new Date() && t.status !== 'concluida'
                 return (
-
-                  <View key={t._id || i} style={styles.tarefaItem}>
-                    <View>
-                      <Text style={styles.tituloTarefa}>{t.tarefa_id?.nome || 'Tarefa'}</Text>
-                      <View style={styles.responsavelContainer}>
-                        {t.responsavel_id?.avatar ? (
-                          <Image
-                            source={{ uri: t.responsavel_id.avatar }}
-                            style={styles.responsavelImg}
-                          />
-                        ) : (
-                          <Image
-                            source={require('../../assets/profile-icon-default.png')}
-                            style={styles.responsavelImg}
-                          />
-                        )}
-                        <Text>{t.responsavel_id?.nome || '-'}</Text>
-                      </View>
-                    </View>
-                    <View style={{ alignItems: 'flex-end' }}>
-                      {isAtrasado ? (
-                        <View style={styles.badgeAtrasado}>
-                          <Text style={styles.badgeAtrasadoText}>Atrasado</Text>
-                        </View>
-                      ) : (
-                        <Text style={styles.badgePendente}>
-                          <Text style={styles.badgePendenteText}>
-                            {t.status.charAt(0).toUpperCase() + t.status.slice(1)}
-
-
-                          </Text>
-                        </Text>
-                      )}
-
-                      <Text style={{ fontSize: 12, color: '#888' }}>
-                        até {new Date(t.data_limite).toLocaleDateString('pt-BR')}
-                      </Text>
-                      <Text style={{ fontSize: 12, color: '#4834d4', fontWeight: 'bold' }}>
-                        +{t.pontuacao}xp
-                      </Text>
-                    </View>
-                  </View>
-                );
+                  <TarefaItem
+                    key={t._id || i}
+                    tarefa={t}
+                    isAtrasado={isAtrasado}
+                  />
+                )
               })
             )}
           </View>
