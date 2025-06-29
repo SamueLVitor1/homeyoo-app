@@ -3,17 +3,17 @@ import { createContext, useContext, useEffect, useState } from "react"
 import Toast from "react-native-toast-message"
 
 
-interface User {
-  nome: string
-  email: string
-  // ...adicione mais se quiser
-}
+// interface User {
+//   nome: string
+//   email: string
+//   // ...adicione mais se quiser
+// }
 
 interface AuthContextData {
-  user: User | null
+  user: any | null
   token: string | null
   isLoading: boolean
-  signIn: (data: { token: string; user: User }) => Promise<void>
+  signIn: (data: { token: string; user: any }) => Promise<void>
   signOut: () => Promise<void>
 }
 
@@ -21,7 +21,7 @@ interface AuthContextData {
 const AuthContext = createContext({} as AuthContextData)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<any | null>(null)
   const [token, setToken] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -41,7 +41,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     loadStorageData()
   }, [])
 
-  async function signIn(data: { token: string; user: User }) {
+  async function signIn(data: { token: string; user: any }) {
     setUser(data.user)
     setToken(data.token)
 
@@ -49,6 +49,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await AsyncStorage.setItem('@usuario', JSON.stringify(data.user))
 
     console.log(user)
+    console.log(token)
+    console.log('Token salvo:', await AsyncStorage.getItem('@token'))
   }
 
 
