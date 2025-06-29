@@ -38,15 +38,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-around',
     marginBottom: 24
   },
-  membroItem: {
-    alignItems: 'center'
-  },
-  avatar: {
-    width: 78,
-    height: 78,
-    borderRadius: 24,
-    marginBottom: 4
-  },
   tarefasContainer: {
     marginBottom: 24
   },
@@ -132,5 +123,11 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: '#111827'
+  },
+  avatar: {
+    width: 78,
+    height: 78,
+    borderRadius: 24,
+    marginBottom: 4
   },
 })

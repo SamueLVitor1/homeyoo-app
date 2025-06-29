@@ -8,6 +8,7 @@ import { buscarCasaId } from '../../services/buscar-casa-id'
 import { ModalNovaTarefa } from '../../components/modal-nova-tarefa'
 import { buscarTarefasCasa } from '../../services/buscar-tarefas-casa'
 import { TarefaItem } from '../../components/tarefa-item'
+import { MembroItem } from '../../components/membro-item'
 
 export function UsuarioComCasa() {
   const { user } = useAuth()
@@ -60,14 +61,6 @@ export function UsuarioComCasa() {
   }, [houseId, showModal])
 
   const casa = {
-    nome: 'Casa Legal',
-    codigo: '#B3up1',
-    tarefas: [
-      { titulo: 'Tarefa exemplo', responsavel: 'Anna', status: 'Em andamento', avatar: require('../../assets/icon-exemple.png') },
-      { titulo: 'Tarefa exemplo', responsavel: 'Anna', status: 'Atrasado', avatar: require('../../assets/icon-exemple.png') },
-      { titulo: 'Tarefa exemplo', responsavel: 'Anna', status: 'Atrasado', avatar: require('../../assets/icon-exemple.png') },
-      { titulo: 'Tarefa exemplo', responsavel: 'Anna', status: 'Atrasado', avatar: require('../../assets/icon-exemple.png') }
-    ],
     ranking: [
       { nome: 'Alex', xp: 87, avatar: 'https://i.pravatar.cc/150?img=5' },
       { nome: 'Emma', xp: 110, avatar: 'https://i.pravatar.cc/150?img=8' },
@@ -97,24 +90,14 @@ export function UsuarioComCasa() {
           <Text style={styles.sectionTitle}>
             Membros
           </Text>
+
           {/* Membros */}
           <View style={styles.membrosContainer}>
             {loading ? (
               <Text>Carregando...</Text>
             ) : (
               membros.map((m: any, i: number) => (
-                <View key={i} style={styles.membroItem}>
-                  {/* Se avatar for vazio, coloca imagem default */}
-                  <Image
-                    source={
-                      m.avatar
-                        ? { uri: m.avatar }
-                        : require('../../assets/profile-icon-default.png')
-                    }
-                    style={styles.avatar}
-                  />
-                  <Text>{m.nome}</Text>
-                </View>
+                <MembroItem key={i} membro={m} />
               ))
             )}
           </View>
