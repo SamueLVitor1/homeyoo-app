@@ -1,8 +1,14 @@
 import { View, Text, Image, TouchableOpacity } from "react-native"
 import { styles } from "./styles"
 import { Feather } from "@expo/vector-icons"
+import { ModalCriarCasa } from '../../components/modal-criar-casa'
+import { ModalEntrarCasa } from '../../components/modal-entrar-casa'
+import { useState } from "react"
 
 export function UsuarioSemCasa() {
+  const [modalCriarVisible, setModalCriarVisible] = useState(false)
+  const [modalEntrarVisible, setModalEntrarVisible] = useState(false)
+
   return (
     <View style={styles.container}>
       <View style={{ backgroundColor: "#add9b6", flex: 1 }}>
@@ -26,18 +32,35 @@ export function UsuarioSemCasa() {
           </Text>
 
           <View style={styles.buttonRow}>
-            <TouchableOpacity style={styles.enterButton}>
+            <TouchableOpacity
+              style={styles.enterButton}
+              onPress={() => setModalEntrarVisible(true)}
+            >
               <Feather name="log-in" size={16} color="#7E22CE" />
               <Text style={styles.enterText}> Entrar</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.createButton}>
+            <TouchableOpacity
+              style={styles.createButton}
+              onPress={() => setModalCriarVisible(true)}
+            >
               <Feather name="plus" size={18} color="#15803D" />
               <Text style={styles.createText}> Criar</Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
+
+      {/* Modais */}
+      <ModalCriarCasa
+        visible={modalCriarVisible}
+        onClose={() => setModalCriarVisible(false)}
+      />
+
+      <ModalEntrarCasa
+        visible={modalEntrarVisible}
+        onClose={() => setModalEntrarVisible(false)}
+      />
     </View>
   )
 }
