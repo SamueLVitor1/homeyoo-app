@@ -5,15 +5,17 @@ import { useAuth } from '../../contexts/AuthContext'
 import { useEffect, useState } from 'react'
 import { buscarMembrosCasa } from '../../services/buscar-membros'
 import { buscarCasaId } from '../../services/buscar-casa-id'
+import { ModalNovaTarefa } from '../../components/modal-nova-tarefa'
 
 export function UsuarioComCasa() {
   const { user } = useAuth()
   const houseId = user?.casas?.[0]?.house_id // pega a primeira casa do user
+  const papel = user?.casas?.[0]?.papel
 
   const [caasa, setCasa] = useState<any>(null)
   const [membros, setMembros] = useState([])
   const [loading, setLoading] = useState(true)
-
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     if (!houseId) return
@@ -104,12 +106,16 @@ export function UsuarioComCasa() {
           </View>
 
           {/* Tarefas */}
+
           <View style={styles.tarefasContainer}>
             <Text style={styles.sectionTitle}>Tarefas</Text>
-            <TouchableOpacity style={styles.novaTarefaButton}>
-              <Feather name="plus-square" size={16} color="#4338CA" />
-              <Text style={styles.novaTarefaText}>Nova tarefa</Text>
-            </TouchableOpacity>
+            {papel === 'admin' && (
+              <TouchableOpacity style={styles.novaTarefaButton} onPress={() => setShowModal(true)}>
+                <Feather name="plus-square" size={16} color="#4338CA" />
+                <Text style={styles.novaTarefaText}>Nova tarefa</Text>
+              </TouchableOpacity>
+            )}
+
             {casa.tarefas.map((t, i) => (
               <View key={i} style={styles.tarefaItem}>
                 <View>
@@ -166,6 +172,12 @@ export function UsuarioComCasa() {
 
         </View>
       </View >
+
+      <ModalNovaTarefa
+        visible={showModal}
+        onClose={() => setShowModal(false)}
+        membros={membros} // do seu useState de membros da casa
+      />
     </ScrollView>
   )
 }
