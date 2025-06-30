@@ -24,4 +24,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 34,
   },
+  tarefasContainer:{
+    marginTop: 60
+  }
 })

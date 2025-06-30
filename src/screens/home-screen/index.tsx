@@ -8,6 +8,8 @@ import { buscarQuantidadeTarefasPendentes } from '../../services/buscar-quantida
 import { buscarQuantidadeTarefasConcluidas } from '../../services/buscar-quantidade-tarefas-concluidas'
 import { buscarPontuacaoUsuario } from '../../services/buscar-pontuacao-usuario'
 import { useEffect, useState } from "react";
+import { buscarTarefasPendentes } from "../../services/buscar-tarefas-pendentes";
+import { formatarData } from "../../utils/formatar-data";
 
 export function HomeScreen() {
 
@@ -16,6 +18,10 @@ export function HomeScreen() {
   const [concluidas, setConcluidas] = useState(0)
   const [pontuacao, setPontuacao] = useState(0)
   const [loading, setLoading] = useState(true)
+
+
+  const [tarefasPendentes, setTarefasPendentes] = useState<any[]>([])
+  const [loadingPendentes, setLoadingPendentes] = useState(true)
 
   useEffect(() => {
     async function fetchDados() {
@@ -38,6 +44,20 @@ export function HomeScreen() {
     }
 
     fetchDados()
+  }, [])
+
+  useEffect(() => {
+    async function fetchPendentes() {
+      setLoadingPendentes(true)
+      try {
+        const data = await buscarTarefasPendentes()
+        setTarefasPendentes(data.tarefas)
+      } catch {
+        setTarefasPendentes([])
+      }
+      setLoadingPendentes(false)
+    }
+    fetchPendentes()
   }, [])
 
   return (
@@ -66,12 +86,49 @@ export function HomeScreen() {
           <StatusCard iconName="star" iconColor="#FACC15" label="Pontos Atuais" value={pontuacao} />
         </View>
       )}
+      <View style={styles.tarefasContainer}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+          <Text style={{ fontWeight: 'bold' }}>Próximas tarefas</Text>
+          <Text style={{ color: '#3269e7', fontSize: 13 }}>ver todas</Text>
+        </View>
 
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Home Screen</Text>
-        <Text onPress={signOut} style={{ color: 'blue', marginTop: 20 }}>Sign Out</Text>
+        {/* Tarefas Pendentes */}
+        {loadingPendentes ? (
+          <Text>Carregando...</Text>
+        ) : tarefasPendentes.length === 0 ? (
+          <Text style={{ color: '#aaa', marginVertical: 12 }}>Nenhuma tarefa pendente</Text>
+        ) : (
+          tarefasPendentes.slice(0, 3).map((t) => (
+            <View key={t._id} style={{
+              backgroundColor: '#F5F5F5',
+              borderRadius: 12,
+              padding: 10,
+              marginVertical: 5,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <View>
+                <Text style={{ fontWeight: '600', fontSize: 15 }}>{t.tarefa_id?.nome || 'Tarefa'}</Text>
+                <Text style={{ color: '#888', fontSize: 13 }}>
+                  {formatarData(t.data_limite)}
+                </Text>
+              </View>
+              <View>
+                <Text style={{
+                  backgroundColor: '#eee',
+                  borderRadius: 8,
+                  paddingHorizontal: 12,
+                  paddingVertical: 4,
+                  color: '#666'
+                }}>
+                  {t.status.charAt(0).toUpperCase() + t.status.slice(1)}
+                </Text>
+              </View>
+            </View>
+          ))
+        )}
       </View>
-
 
     </LinearGradient>
   )

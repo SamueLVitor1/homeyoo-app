@@ -3,8 +3,8 @@ import { Feather } from "@expo/vector-icons"
 import { View } from "react-native"
 
 import { HomeScreen } from "../screens/home-screen"
-import { PerfilScreen } from "../screens/perfil-screen"  // você pode criar essa tela já
-import { CasaScreen } from "../screens/casa-screen/intex"   // mesma coisa aqui
+import { PerfilScreen } from "../screens/perfil-screen" 
+import { CasaScreen } from "../screens/casa-screen"
 
 const Tab = createBottomTabNavigator()
 

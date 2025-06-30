@@ -7,7 +7,6 @@ export const api = axios.create({
 
 const rotasPublicas = ['/login', '/usuarios']
 
-
 api.interceptors.request.use(async (config) => {
   const token = await AsyncStorage.getItem('@token')
 
