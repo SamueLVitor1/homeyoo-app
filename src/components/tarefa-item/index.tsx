@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import { ModalConcluirTarefa } from '../concluir-tarefa'
 import { concluirTarefa } from '../../services/concluir-tarefa'
 import Toast from 'react-native-toast-message'
+import { useTarefasContext } from '../../contexts/tarefas-context'
 
 interface TarefaItemProps {
   tarefa: any
@@ -14,6 +15,7 @@ interface TarefaItemProps {
 export function TarefaItem({ tarefa, isAtrasado }: TarefaItemProps) {
   const [showModalConcluir, setShowModalConcluir] = useState(false)
   const [tarefaSelecionada, setTarefaSelecionada] = useState(null)
+  const { reloadFlag, reload } = useTarefasContext()
 
   const { user } = useAuth()
 
@@ -28,7 +30,7 @@ export function TarefaItem({ tarefa, isAtrasado }: TarefaItemProps) {
       })
 
 
-
+      reload()
       setShowModalConcluir(false)
       setTarefaSelecionada(null)
       // Atualize a lista de tarefas pendentes/concluídas, pontuação, etc

@@ -11,9 +11,10 @@ import { useEffect, useState } from "react";
 import { buscarTarefasPendentes } from "../../services/buscar-tarefas-pendentes";
 import { formatarData } from "../../utils/formatar-data";
 import { TarefaListagem } from "../../types/tarefa";
+import { useTarefasContext } from "../../contexts/tarefas-context";
 
 export function HomeScreen() {
-
+  const { reloadFlag, reload } = useTarefasContext()
   const { user, signOut } = useAuth()
   const [pendentes, setPendentes] = useState(0)
   const [concluidas, setConcluidas] = useState(0)
@@ -45,7 +46,7 @@ export function HomeScreen() {
     }
 
     fetchDados()
-  }, [])
+  }, [reloadFlag])
 
   useEffect(() => {
     async function fetchPendentes() {
@@ -59,7 +60,7 @@ export function HomeScreen() {
       setLoadingPendentes(false)
     }
     fetchPendentes()
-  }, [])
+  }, [reloadFlag])
 
   return (
     <LinearGradient

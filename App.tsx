@@ -6,6 +6,7 @@ import { TelasPublica } from "./src/navigation/pages-publicas";
 import Toast from "react-native-toast-message";
 import { useEffect } from "react";
 import * as NavigationBar from 'expo-navigation-bar'
+import { TarefasProvider } from "./src/contexts/tarefas-context";
 
 function Rotas() {
   const { token, isLoading } = useAuth();
@@ -25,7 +26,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <AuthProvider>
-        <Rotas />
+        <TarefasProvider>
+          <Rotas />
+        </TarefasProvider>
       </AuthProvider>
       <Toast />
     </NavigationContainer>

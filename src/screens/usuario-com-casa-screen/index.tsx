@@ -9,9 +9,10 @@ import { ModalNovaTarefa } from '../../components/modal-nova-tarefa'
 import { buscarTarefasCasa } from '../../services/buscar-tarefas-casa'
 import { TarefaItem } from '../../components/tarefa-item'
 import { MembroItem } from '../../components/membro-item'
+import { useTarefasContext } from '../../contexts/tarefas-context'
 
 export function UsuarioComCasa() {
-
+  const { reloadFlag, reload } = useTarefasContext()
   const { user } = useAuth()
   const houseId = user?.casas?.[0]?.house_id
   const papel = user?.casas?.[0]?.papel
@@ -57,7 +58,7 @@ export function UsuarioComCasa() {
       .then(data => setTarefas(data))
       .catch(() => setTarefas([]))
       .finally(() => setLoadingTarefas(false))
-  }, [houseId, showModal])
+  }, [houseId, showModal, reloadFlag])
 
   const casaTeste = {
     ranking: [
