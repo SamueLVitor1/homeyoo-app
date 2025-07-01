@@ -15,7 +15,7 @@ export function UsuarioComCasa() {
   const { user } = useAuth()
   const houseId = user?.casas?.[0]?.house_id
   const papel = user?.casas?.[0]?.papel
-  const [caasa, setCasa] = useState<any>(null)
+  const [casa, setCasa] = useState<any>(null)
   const [membros, setMembros] = useState([])
   const [tarefas, setTarefas] = useState([])
   const [loading, setLoading] = useState(true)
@@ -27,7 +27,7 @@ export function UsuarioComCasa() {
 
     async function fetchMembros() {
       try {
-        const data = await buscarMembrosCasa(houseId)
+        const data = await buscarMembrosCasa(houseId || '')
         setMembros(data.membros)
       } catch (err) {
         setMembros([])
@@ -37,7 +37,7 @@ export function UsuarioComCasa() {
 
     async function fetchCasa() {
       try {
-        const data = await buscarCasaId(houseId)
+        const data = await buscarCasaId(houseId || '')
         setCasa(data.casa.casa)
       } catch (err) {
         setCasa(null)
@@ -59,7 +59,7 @@ export function UsuarioComCasa() {
       .finally(() => setLoadingTarefas(false))
   }, [houseId, showModal])
 
-  const casa = {
+  const casaTeste = {
     ranking: [
       { nome: 'Alex', xp: 87, avatar: 'https://i.pravatar.cc/150?img=5' },
       { nome: 'Emma', xp: 110, avatar: 'https://i.pravatar.cc/150?img=8' },
@@ -82,8 +82,8 @@ export function UsuarioComCasa() {
 
         <View style={styles.content}>
           <View style={styles.header}>
-            <Text style={styles.nomeCasa}>{caasa.nome}</Text>
-            <Text style={styles.codigoCasa}>#{caasa.codigo}</Text>
+            <Text style={styles.nomeCasa}>{casa.nome}</Text>
+            <Text style={styles.codigoCasa}>#{casa.codigo}</Text>
           </View>
 
           <Text style={styles.sectionTitle}>
@@ -134,36 +134,36 @@ export function UsuarioComCasa() {
           <View style={styles.rankingContainer}>
             <View style={styles.rankingHeader}>
               <Text style={styles.rankingTitle}>Rankeamento 🏆</Text>
-              <Text style={styles.metaText}>Meta: {casa.metaXp}xp</Text>
+              <Text style={styles.metaText}>Meta: {casaTeste.metaXp}xp</Text>
             </View>
 
             <View style={styles.podio}>
               {/* 2º lugar */}
               <View style={styles.rankBlock2}>
-                <Image source={{ uri: casa.ranking[1].avatar }} style={styles.avatar} />
-                <Text style={styles.rankName}>{casa.ranking[1].nome}</Text>
+                <Image source={{ uri: casaTeste.ranking[1].avatar }} style={styles.avatar} />
+                <Text style={styles.rankName}>{casaTeste.ranking[1].nome}</Text>
                 <View style={[styles.rankBar, { backgroundColor: '#D1D5DB', height: 60 }]}>
-                  <Text style={styles.rankXp}>{casa.ranking[1].xp}xp</Text>
+                  <Text style={styles.rankXp}>{casaTeste.ranking[1].xp}xp</Text>
                 </View>
               </View>
 
               {/* 1º lugar */}
               <View style={styles.rankBlock1}>
-                <Image source={{ uri: casa.ranking[0].avatar }} style={styles.avatar} />
+                <Image source={{ uri: casaTeste.ranking[0].avatar }} style={styles.avatar} />
                 <Text style={styles.rankName}>
-                  {casa.ranking[0].nome} <Text>🥇</Text>
+                  {casaTeste.ranking[0].nome} <Text>🥇</Text>
                 </Text>
                 <View style={[styles.rankBar, { backgroundColor: '#FACC15', height: 90 }]}>
-                  <Text style={styles.rankXp}>{casa.ranking[0].xp}xp</Text>
+                  <Text style={styles.rankXp}>{casaTeste.ranking[0].xp}xp</Text>
                 </View>
               </View>
 
               {/* 3º lugar */}
               <View style={styles.rankBlock3}>
-                <Image source={{ uri: casa.ranking[2].avatar }} style={styles.avatar} />
-                <Text style={styles.rankName}>{casa.ranking[2].nome}</Text>
+                <Image source={{ uri: casaTeste.ranking[2].avatar }} style={styles.avatar} />
+                <Text style={styles.rankName}>{casaTeste.ranking[2].nome}</Text>
                 <View style={[styles.rankBar, { backgroundColor: '#D97706', height: 45 }]}>
-                  <Text style={styles.rankXp}>{casa.ranking[2].xp}xp</Text>
+                  <Text style={styles.rankXp}>{casaTeste.ranking[2].xp}xp</Text>
                 </View>
               </View>
             </View>

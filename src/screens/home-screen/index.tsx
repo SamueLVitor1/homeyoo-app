@@ -10,6 +10,7 @@ import { buscarPontuacaoUsuario } from '../../services/buscar-pontuacao-usuario'
 import { useEffect, useState } from "react";
 import { buscarTarefasPendentes } from "../../services/buscar-tarefas-pendentes";
 import { formatarData } from "../../utils/formatar-data";
+import { TarefaListagem } from "../../types/tarefa";
 
 export function HomeScreen() {
 
@@ -20,7 +21,7 @@ export function HomeScreen() {
   const [loading, setLoading] = useState(true)
 
 
-  const [tarefasPendentes, setTarefasPendentes] = useState<any[]>([])
+  const [tarefasPendentes, setTarefasPendentes] = useState<TarefaListagem[]>([])
   const [loadingPendentes, setLoadingPendentes] = useState(true)
 
   useEffect(() => {
@@ -111,7 +112,7 @@ export function HomeScreen() {
               <View>
                 <Text style={{ fontWeight: '600', fontSize: 15 }}>{t.tarefa_id?.nome || 'Tarefa'}</Text>
                 <Text style={{ color: '#888', fontSize: 13 }}>
-                  {formatarData(t.data_limite)}
+                  {formatarData(t.data_limite || '')}
                 </Text>
               </View>
               <View>
