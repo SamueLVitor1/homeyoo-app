@@ -1,10 +1,13 @@
 import { View, Text, Image } from 'react-native'
 import { useEffect, useState } from 'react'
 import { styles } from './styles'
-import { buscarRankingCasa } from '../../services/buscarRankingCasa' 
+import { buscarRankingCasa } from '../../services/buscarRankingCasa'
 import { useAuth } from '../../contexts/AuthContext'
+import { useTarefasContext } from '../../contexts/tarefas-context'
 
 export function PodioRanking() {
+
+  const { reloadFlag, reload } = useTarefasContext()
   const { user } = useAuth()
   const houseId = user?.casas?.[0]?.house_id
   const [ranking, setRanking] = useState<any[]>([])
@@ -26,7 +29,7 @@ export function PodioRanking() {
       setLoading(false)
     }
     fetchRanking()
-  }, [houseId])
+  }, [houseId, reloadFlag])
 
   if (loading) return <Text>Carregando rank...</Text>
   if (!ranking || ranking.length < 3) return null
