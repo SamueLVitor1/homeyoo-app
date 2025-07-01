@@ -30,7 +30,6 @@ export function ModalCriarCasa({ visible, onClose }: ModalCriarCasaProps) {
   })
 
   async function handleCreate(data: FormData) {
-    console.log(data)
     try {
       const response = await criarCasa(data)
 

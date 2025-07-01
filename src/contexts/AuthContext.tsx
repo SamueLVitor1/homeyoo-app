@@ -52,10 +52,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     await AsyncStorage.setItem('@token', data.token)
     await AsyncStorage.setItem('@usuario', JSON.stringify(data.user))
-
-    console.log(user)
-    console.log(token)
-    console.log('Token salvo:', await AsyncStorage.getItem('@token'))
   }
 
 

@@ -130,6 +130,9 @@ export function HomeScreen() {
         )}
       </View>
 
+      {/* <button onClick={signOut}>
+        click
+      </button> */}
     </LinearGradient>
   )
 }

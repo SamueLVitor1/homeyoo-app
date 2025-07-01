@@ -25,12 +25,11 @@ export function CasaScreen() {
           console.error("Erro ao buscar casa:", error)
         }
       }
-
       setIsLoading(false)
     }
 
     carregarCasa()
   }, [user])
 
-  return casa ? <UsuarioComCasa casa={casa} /> : <UsuarioSemCasa />
+  return casa ? <UsuarioComCasa /> : <UsuarioSemCasa />
 }

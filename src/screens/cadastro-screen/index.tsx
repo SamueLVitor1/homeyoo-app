@@ -59,8 +59,6 @@ export function CadastroScreen() {
       avatar: avatarSelecionado
     }
 
-    console.log(body)
-
     setIsLoading(true)
     try {
       const response = await criarUsuario(body)

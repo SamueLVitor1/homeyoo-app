@@ -11,10 +11,10 @@ import { TarefaItem } from '../../components/tarefa-item'
 import { MembroItem } from '../../components/membro-item'
 
 export function UsuarioComCasa() {
-  const { user } = useAuth()
-  const houseId = user?.casas?.[0]?.house_id // pega a primeira casa do user
-  const papel = user?.casas?.[0]?.papel
 
+  const { user } = useAuth()
+  const houseId = user?.casas?.[0]?.house_id
+  const papel = user?.casas?.[0]?.papel
   const [caasa, setCasa] = useState<any>(null)
   const [membros, setMembros] = useState([])
   const [tarefas, setTarefas] = useState([])
@@ -28,8 +28,7 @@ export function UsuarioComCasa() {
     async function fetchMembros() {
       try {
         const data = await buscarMembrosCasa(houseId)
-        console.log(data)
-        setMembros(data.membros) // ajuste aqui se vier data.membros
+        setMembros(data.membros)
       } catch (err) {
         setMembros([])
       }

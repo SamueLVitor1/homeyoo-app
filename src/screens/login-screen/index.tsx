@@ -56,10 +56,7 @@ export function LoginScreen() {
       const { token, usuario } = response
 
       await signIn({ token, user: usuario })
-      console.log('Logado com sucesso:', response)
-
     } catch (error: any) {
-      console.log('Erro ao fazer login:', error.response?.data || error.message)
       Toast.show({
         type: 'error',
         text1: 'Erro ao fazer login',
