@@ -11,6 +11,7 @@ import { TarefaItem } from '../../components/tarefa-item'
 import { MembroItem } from '../../components/membro-item'
 import { useTarefasContext } from '../../contexts/tarefas-context'
 import { PodioRanking } from '../../components/podio-ranking'
+import { useNavigation } from '@react-navigation/native'
 
 export function UsuarioComCasa() {
   const { reloadFlag, reload } = useTarefasContext()
@@ -24,6 +25,7 @@ export function UsuarioComCasa() {
   const [loadingTarefas, setLoadingTarefas] = useState(true)
   const [showModal, setShowModal] = useState(false)
 
+  const navigation = useNavigation<any>();
   useEffect(() => {
     if (!houseId) return
 
@@ -46,7 +48,6 @@ export function UsuarioComCasa() {
       }
       setLoading(false)
     }
-
     fetchCasa()
     fetchMembros()
   }, [houseId])
@@ -60,15 +61,6 @@ export function UsuarioComCasa() {
       .catch(() => setTarefas([]))
       .finally(() => setLoadingTarefas(false))
   }, [houseId, showModal, reloadFlag])
-
-  const casaTeste = {
-    ranking: [
-      { nome: 'Alex', xp: 87, avatar: 'https://i.pravatar.cc/150?img=5' },
-      { nome: 'Emma', xp: 110, avatar: 'https://i.pravatar.cc/150?img=8' },
-      { nome: 'Anna', xp: 57, avatar: 'https://i.pravatar.cc/150?img=9' }
-    ],
-    metaXp: 200
-  }
 
   if (loading || !casa) return <Text>Carregando...</Text>
 
@@ -85,9 +77,19 @@ export function UsuarioComCasa() {
         <View style={styles.content}>
           <View style={styles.header}>
             <Text style={styles.nomeCasa}>{casa.nome}</Text>
+            {papel === 'admin' && (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('CasaConfig')
+                }}
+                style={{ marginLeft: 8, position: 'absolute', right: 0, top: 16 }}
+                hitSlop={{ top: 16, left: 16, bottom: 16, right: 16 }}
+              >
+                <Feather name="settings" size={22} color="#6B7280" />
+              </TouchableOpacity>
+            )}
             <Text style={styles.codigoCasa}>#{casa.codigo}</Text>
           </View>
-
           <Text style={styles.sectionTitle}>
             Membros
           </Text>
