@@ -30,7 +30,7 @@ export function CadastroScreen() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
   const { signIn } = useAuth()
 
   const avatarUrls = [

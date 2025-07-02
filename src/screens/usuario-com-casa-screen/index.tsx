@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { buscarMembrosCasa } from '../../services/buscar-membros'
 import { buscarCasaId } from '../../services/buscar-casa-id'
 import { ModalNovaTarefa } from '../../components/modal-nova-tarefa'
-import { buscarTarefasCasa } from '../../services/buscar-tarefas-casa'
+import { buscarTarefasCasa, buscarTarefasPendentesCasa } from '../../services/buscar-tarefas-casa'
 import { TarefaItem } from '../../components/tarefa-item'
 import { MembroItem } from '../../components/membro-item'
 import { useTarefasContext } from '../../contexts/tarefas-context'
@@ -56,7 +56,7 @@ export function UsuarioComCasa() {
     if (!houseId) return
 
     setLoadingTarefas(true)
-    buscarTarefasCasa(houseId)
+    buscarTarefasPendentesCasa(houseId)
       .then(data => setTarefas(data))
       .catch(() => setTarefas([]))
       .finally(() => setLoadingTarefas(false))

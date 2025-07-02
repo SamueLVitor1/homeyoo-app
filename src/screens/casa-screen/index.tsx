@@ -22,7 +22,7 @@ export function CasaScreen() {
             const dados = await buscarCasaDoUsuario()
             setCasa(dados)
             setIsLoading(false)
-          }, 1500)
+          }, 600)
         } else {
           setTimeout(() => {
             setCasa(null)
