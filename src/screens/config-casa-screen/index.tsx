@@ -9,6 +9,8 @@ import { ModalEditarNomeCasa } from '../../components/ModalEditarNomeCasa'
 import { atualizarCasa } from '../../services/atualizar-casa'
 import Toast from 'react-native-toast-message'
 import { ModalEditarMetaCasa } from '../../components/ModalEditarMetaCasa'
+import { removerMembroCasa } from '../../services/remover-membro'
+import { ModalRemoverMembro } from '../../components/ModalRemoverMembro'
 // Importe o useAuth e outros hooks/contexts se precisar
 
 export function CasaConfigScreen() {
@@ -19,6 +21,22 @@ export function CasaConfigScreen() {
   const [modalNomeVisible, setModalNomeVisible] = useState(false)
   const [reload, setReload] = useState(0)
   const [modalMetaVisible, setModalMetaVisible] = useState(false)
+  const [modalRemover, setModalRemover] = useState({ visible: false, nome: '', userId: '' })
+
+  function openRemoverModal(participante: any) {
+    setModalRemover({ visible: true, nome: participante.nome, userId: participante.user_id })
+  }
+
+  async function handleConfirmarRemover() {
+    try {
+      await removerMembroCasa(houseId || '', modalRemover.userId)
+      setModalRemover({ visible: false, nome: '', userId: '' })
+      setReload(1)
+      Toast.show({ type: 'success', text1: 'Membro removido com sucesso!' })
+    } catch (e) {
+      Toast.show({ type: 'error', text1: 'Erro ao remover membro' })
+    }
+  }
 
   async function handleSalvarNome(novoNome: string) {
     try {
@@ -62,16 +80,7 @@ export function CasaConfigScreen() {
     fetchCasa()
   }, [houseId, reload])
 
-  const casa = {
-    nome: 'Casa Legal',
-    codigo: 'b3up1',
-    metaXp: 200,
-    participantes: [
-      { nome: 'John doe', id: 1 },
-      { nome: 'Maria', id: 2 },
-      { nome: 'Teste novo 2', id: 3 }
-    ]
-  }
+
   const navigation = useNavigation<any>()
   // Handler para editar nome/meta/código
   const handleEditNome = () => { /* abre input/modal */ }
@@ -131,10 +140,10 @@ export function CasaConfigScreen() {
         {/* Participantes */}
         <View style={styles.section}>
           <Text style={styles.label}>Participantes:</Text>
-          {casa.participantes.map((p) => (
-            <View key={p.id} style={styles.participanteRow}>
+          {casaa.membros.map((p: any) => (
+            <View key={p.user_id} style={styles.participanteRow}>
               <Text style={styles.participanteNome}>{p.nome}</Text>
-              <TouchableOpacity onPress={() => handleRemoverParticipante(p.id)}>
+              <TouchableOpacity onPress={() => openRemoverModal(p)}>
                 <Feather name="trash-2" size={18} color="#DC2626" />
               </TouchableOpacity>
             </View>
@@ -155,17 +164,22 @@ export function CasaConfigScreen() {
 
         <ModalEditarNomeCasa
           visible={modalNomeVisible}
-          nomeAtual={casa?.nome || ''}
+          nomeAtual={casaa?.nome || ''}
           onClose={() => setModalNomeVisible(false)}
           onSalvar={handleSalvarNome}
         />
-
-
         <ModalEditarMetaCasa
           visible={modalMetaVisible}
           metaAtual={casaa?.metaAtual || 0}
           onClose={() => setModalMetaVisible(false)}
           onSalvar={handleSalvarMeta}
+        />
+
+        <ModalRemoverMembro
+          visible={modalRemover.visible}
+          nome={modalRemover.nome}
+          onClose={() => setModalRemover({ visible: false, nome: '', userId: '' })}
+          onConfirmar={handleConfirmarRemover}
         />
       </ScrollView>
     )
