@@ -2,11 +2,13 @@ import { View, Text, Image, StyleSheet } from "react-native"
 import { useEffect, useState } from "react"
 import { buscarPerfil } from "../../services/buscar-perfil"
 import { styles } from "./styles"
+import { useTarefasContext } from "../../contexts/tarefas-context"
 
 export function StreakInfo() {
   const [streakAtual, setStreakAtual] = useState(0)
   const [maiorStreak, setMaiorStreak] = useState(0)
   const [loading, setLoading] = useState(true)
+  const { tarefasReload } = useTarefasContext()
 
   useEffect(() => {
     async function buscarPerfilInfo() {
@@ -22,7 +24,7 @@ export function StreakInfo() {
       }
     }
     buscarPerfilInfo()
-  }, [])
+  }, [tarefasReload])
 
   const isStreak = streakAtual > 0
 

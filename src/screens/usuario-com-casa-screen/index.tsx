@@ -14,7 +14,7 @@ import { PodioRanking } from '../../components/podio-ranking'
 import { useNavigation } from '@react-navigation/native'
 
 export function UsuarioComCasa() {
-  const { reloadFlag, reload } = useTarefasContext()
+  const { tarefasReload } = useTarefasContext()
   const { user } = useAuth()
   const houseId = user?.casas?.[0]?.house_id
   const papel = user?.casas?.[0]?.papel
@@ -60,7 +60,7 @@ export function UsuarioComCasa() {
       .then(data => setTarefas(data))
       .catch(() => setTarefas([]))
       .finally(() => setLoadingTarefas(false))
-  }, [houseId, showModal, reloadFlag])
+  }, [houseId, showModal, tarefasReload])
 
   if (loading || !casa) return <View></View>
 
@@ -142,7 +142,7 @@ export function UsuarioComCasa() {
       <ModalNovaTarefa
         visible={showModal}
         onClose={() => setShowModal(false)}
-        membros={membros} // do seu useState de membros da casa
+        membros={membros} 
       />
     </ScrollView>
   )

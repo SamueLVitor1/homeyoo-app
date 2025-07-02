@@ -15,7 +15,7 @@ interface TarefaItemProps {
 export function TarefaItem({ tarefa, isAtrasado }: TarefaItemProps) {
   const [showModalConcluir, setShowModalConcluir] = useState(false)
   const [tarefaSelecionada, setTarefaSelecionada] = useState(null)
-  const { reloadFlag, reload } = useTarefasContext()
+  const { fnReloadTarefas, reload } = useTarefasContext()
 
   const { user } = useAuth()
 
@@ -33,7 +33,7 @@ export function TarefaItem({ tarefa, isAtrasado }: TarefaItemProps) {
       reload()
       setShowModalConcluir(false)
       setTarefaSelecionada(null)
-      // Atualize a lista de tarefas pendentes/concluídas, pontuação, etc
+      fnReloadTarefas()
     } catch (error) {
       console.log(error)
       // Aqui pode mostrar um Toast de erro se quiser

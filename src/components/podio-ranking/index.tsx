@@ -8,12 +8,12 @@ import * as Animatable from 'react-native-animatable'
 import { buscarCasaId } from '../../services/buscar-casa-id'
 
 export function PodioRanking() {
-  const { reloadFlag } = useTarefasContext()
   const { user } = useAuth()
   const houseId = user?.casas?.[0]?.house_id
   const [ranking, setRanking] = useState<any[]>([])
   const [metaXp, setMetaXp] = useState<number>(0)
   const [loading, setLoading] = useState(true)
+  const { tarefasReload } = useTarefasContext()
 
   useEffect(() => {
     async function fetchRanking() {
@@ -32,7 +32,7 @@ export function PodioRanking() {
       setLoading(false)
     }
     fetchRanking()
-  }, [houseId, reloadFlag])
+  }, [houseId, tarefasReload])
 
   if (loading) return <Text>Carregando rank...</Text>
 

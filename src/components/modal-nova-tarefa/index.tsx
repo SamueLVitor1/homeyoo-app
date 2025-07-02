@@ -10,6 +10,7 @@ import { buscarTiposTarefa } from '../../services/buscar-tipos-tarefa'
 import { criarTarefa } from '../../services/criar-tarefa'
 import { useAuth } from '../../contexts/AuthContext'
 import Toast from 'react-native-toast-message'
+import { useTarefasContext } from '../../contexts/tarefas-context'
 
 interface ModalNovaTarefaProps {
   visible: boolean
@@ -38,6 +39,7 @@ export function ModalNovaTarefa({ visible, onClose, membros }: ModalNovaTarefaPr
   const [loadingSubmit, setLoadingSubmit] = useState(false)
 
   const houseId = user?.casas?.[0]?.house_id
+  const { fnReloadTarefas } = useTarefasContext()
 
   useEffect(() => {
     if (!visible) return
@@ -46,7 +48,7 @@ export function ModalNovaTarefa({ visible, onClose, membros }: ModalNovaTarefaPr
       .then((tarefas) => setTiposTarefa(tarefas))
       .catch(() => setTiposTarefa([]))
       .finally(() => setLoadingTipos(false))
-  }, [visible, ])
+  }, [visible,])
 
   async function handleFormSubmit(data: FormData) {
     if (!houseId) return
@@ -65,6 +67,7 @@ export function ModalNovaTarefa({ visible, onClose, membros }: ModalNovaTarefaPr
         type: 'success',
         text1: 'Tarefa criada com sucesso!',
       })
+      fnReloadTarefas()
       reset()
       onClose()
     } catch (e) {
