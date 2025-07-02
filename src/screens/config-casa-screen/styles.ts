@@ -3,75 +3,102 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F3F8FF'
+    backgroundColor: '#F3F8FF',
   },
   header: {
     alignItems: 'center',
-    marginBottom: 12
+    marginBottom: 18,
+    marginTop: 24
   },
   headerImg: {
-    marginTop: 30,
     width: '100%',
-    height: 140,
-    resizeMode: 'cover'
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 28,
-    marginTop: -20,
-    color: '#166534'
+    height: 150,
+    resizeMode: 'cover',
+    marginBottom: 12,
+    marginTop: 0,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
   section: {
-    marginHorizontal: 24,
-    marginBottom: 24
+    marginHorizontal: 20,
+    marginBottom: 18,
   },
   label: {
-    color: '#334155',
+    color: '#64748B',
     fontWeight: 'bold',
     fontSize: 15,
-    marginBottom: 3
+    marginBottom: 3,
+    letterSpacing: 0.1,
   },
   itemRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10
+    gap: 8,
+    backgroundColor: '#fff',
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 8,
+    elevation: 1,
+    marginTop: 3,
   },
   value: {
     fontSize: 16,
     color: '#222',
-    fontWeight: '500'
+    fontWeight: '500',
+    flex: 1,
   },
   limparXpButton: {
-    backgroundColor: '#FEF2F2',
-    borderRadius: 8,
-    padding: 12,
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 24,
-    marginBottom: 20
+    backgroundColor: '#FEF2F2',
+    borderRadius: 10,
+    padding: 13,
+    marginHorizontal: 20,
+    marginBottom: 25,
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#FECACA',
+  },
+  limparXpText: {
+    color: '#DC2626',
+    fontWeight: '700',
+    fontSize: 15,
   },
   participanteRow: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
-    borderRadius: 6,
-    padding: 10,
-    marginBottom: 10,
-    elevation: 1
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    marginBottom: 12,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+  },
+  participanteNome: {
+    flex: 1,
+    fontWeight: '500',
+    fontSize: 15,
+    color: '#232323',
   },
   voltarButton: {
-    marginTop: 180,
-    marginLeft: 20,
-    backgroundColor: '#f4f4f5',
-    width: 150,
+    marginTop: 40,
+    marginLeft: 16,
+    backgroundColor: '#F1F5F9',
+    width: 120,
     paddingVertical: 10,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    display: 'flex',
+    paddingHorizontal: 12,
+    borderRadius: 8,
     flexDirection: 'row',
-    gap: 12,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#e4e4e7'
-  }
+    borderColor: '#E5E7EB',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 2,
+  },
 })

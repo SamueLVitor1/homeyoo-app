@@ -32,7 +32,7 @@ export function LoginScreen() {
   const [isLoading, setIsLoading] = useState(false)
 
 
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
 
   const {
     control,
@@ -50,7 +50,7 @@ export function LoginScreen() {
       Toast.show({
         type: 'success',
         text1: 'Login realizado com sucesso!',
-        position: 'bottom'
+        position: 'top'
       })
 
       const { token, usuario } = response
@@ -61,7 +61,7 @@ export function LoginScreen() {
         type: 'error',
         text1: 'Erro ao fazer login',
         text2: 'Verifique seu email e senha',
-        position: 'bottom'
+        position: 'top'
       })
     } finally {
       setIsLoading(false)
