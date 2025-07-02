@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
@@ -6,43 +6,46 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     padding: 14,
     borderRadius: 16,
-    backgroundColor: "#fffbea",
     marginVertical: 10,
-    shadowColor: "#fcab36",
-    shadowOpacity: 0.08,
+    shadowOpacity: 0.09,
     shadowRadius: 6,
     elevation: 2,
-    marginTop: 80
+    shadowOffset: { width: 0, height: 3 },
+  },
+  fireBg: {
+    backgroundColor: "#fffbea",
+    shadowColor: "#fcab36",
+  },
+  iceBg: {
+    backgroundColor: "#e0f4fd",
+    shadowColor: "#1da9fc",
   },
   daysBox: {
     backgroundColor: "#fff",
-    borderColor: "#fcab36",
     borderWidth: 2,
     borderRadius: 14,
     minWidth: 48,
     minHeight: 48,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#fcab36",
-    shadowOpacity: 0.10,
+    marginRight: 0,
+    shadowOpacity: 0.09,
     shadowRadius: 6,
     elevation: 4,
   },
   daysNumber: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#fcab36",
   },
   daysLabel: {
     fontSize: 12,
-    color: "#bc873c",
+    fontWeight: "600",
     marginTop: -4,
     marginBottom: 2,
-    fontWeight: "600",
   },
   character: {
     width: 58,
-    height: 68,
+    height: 62,
     marginRight: 14,
   },
   right: {
@@ -52,13 +55,13 @@ export const styles = StyleSheet.create({
   mainText: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "#fcab36",
     marginBottom: 2,
+    textAlign: 'center'
   },
   recordText: {
     fontSize: 13,
-    color: "#bc873c",
-    marginTop: 3,
+    marginTop: 6,
     fontWeight: "500",
+    textAlign: 'center'
   },
 })

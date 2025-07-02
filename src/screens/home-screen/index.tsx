@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StreakInfo } from "../../components/streak-info";
 
 export function HomeScreen() {
-  const { reloadFlag, reload } = useTarefasContext()
+  const { reloadFlag, reload, tarefasReload } = useTarefasContext()
   const { user, signOut } = useAuth()
   const [pendentes, setPendentes] = useState(0)
   const [concluidas, setConcluidas] = useState(0)
@@ -49,7 +49,7 @@ export function HomeScreen() {
     }
 
     fetchDados()
-  }, [reloadFlag])
+  }, [reloadFlag, tarefasReload])
 
   useEffect(() => {
     async function fetchPendentes() {
@@ -63,7 +63,9 @@ export function HomeScreen() {
       setLoadingPendentes(false)
     }
     fetchPendentes()
-  }, [reloadFlag])
+  }, [reloadFlag, tarefasReload])
+
+
 
   return (
     <LinearGradient
@@ -146,7 +148,7 @@ export function HomeScreen() {
         )}
       </View>
 
-      <StreakInfo streakAtual={0} maiorStreak={12} />
+      <StreakInfo />
       {/* <button onClick={signOut}>
         click
       </button> */}
