@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Button, Text, View } from "react-native";
+import { Button, Text, TouchableOpacity, View } from "react-native";
 import { useAuth } from "../../contexts/AuthContext";
 import { styles } from "./styles";
 import { LinearGradient } from "expo-linear-gradient";
@@ -12,6 +12,8 @@ import { buscarTarefasPendentes } from "../../services/buscar-tarefas-pendentes"
 import { formatarData } from "../../utils/formatar-data";
 import { TarefaListagem } from "../../types/tarefa";
 import { useTarefasContext } from "../../contexts/tarefas-context";
+import { Feather } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 export function HomeScreen() {
   const { reloadFlag, reload } = useTarefasContext()
@@ -20,7 +22,7 @@ export function HomeScreen() {
   const [concluidas, setConcluidas] = useState(0)
   const [pontuacao, setPontuacao] = useState(0)
   const [loading, setLoading] = useState(true)
-
+  const navigation = useNavigation<any>()
 
   const [tarefasPendentes, setTarefasPendentes] = useState<TarefaListagem[]>([])
   const [loadingPendentes, setLoadingPendentes] = useState(true)
@@ -91,14 +93,25 @@ export function HomeScreen() {
       <View style={styles.tarefasContainer}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
           <Text style={{ fontWeight: 'bold' }}>Próximas tarefas</Text>
-          <Text style={{ color: '#3269e7', fontSize: 13 }}>ver todas</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Casa')}>
+            <Text style={{ color: '#3269e7', fontSize: 13 }}>ver todas</Text>
+          </TouchableOpacity>
         </View>
 
         {/* Tarefas Pendentes */}
         {loadingPendentes ? (
           <Text>Carregando...</Text>
         ) : tarefasPendentes.length === 0 ? (
-          <Text style={{ color: '#aaa', marginVertical: 12 }}>Nenhuma tarefa pendente</Text>
+          <View style={{ alignItems: 'center', marginTop: 40 }}>
+            {/* Substitua por um ícone do seu app */}
+            <Feather name="clipboard" size={54} color="#bbb" />
+            <Text style={{ fontWeight: 'bold', marginTop: 16, fontSize: 16, color: '#666' }}>
+              Você ainda não tem tarefas para hoje
+            </Text>
+            <Text style={{ color: '#888', marginTop: 8, textAlign: 'center' }}>
+              Organize a rotina da sua casa adicionando novas tarefas!
+            </Text>
+          </View>
         ) : (
           tarefasPendentes.slice(0, 3).map((t) => (
             <View key={t._id} style={{

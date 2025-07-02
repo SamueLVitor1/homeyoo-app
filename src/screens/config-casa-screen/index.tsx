@@ -1,6 +1,8 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native'
+import { styles } from './styles'
 import { Feather } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 // Importe o useAuth e outros hooks/contexts se precisar
 
 export function CasaConfigScreen() {
@@ -15,7 +17,7 @@ export function CasaConfigScreen() {
       { nome: 'Teste novo 2', id: 3 }
     ]
   }
-
+  const navigation = useNavigation<any>()
   // Handler para editar nome/meta/código
   const handleEditNome = () => { /* abre input/modal */ }
   const handleEditMeta = () => { /* abre input/modal */ }
@@ -27,8 +29,7 @@ export function CasaConfigScreen() {
     <ScrollView style={styles.container}>
       {/* Header customizado */}
       <View style={styles.header}>
-        <Image source={require('../../assets/house-header.png')} style={styles.headerImg} />
-        <Text style={styles.title}>CONFIGURAÇÕES</Text>
+        <Image source={require('../../assets/config-header.png')} style={styles.headerImg} />
       </View>
 
       <View style={styles.section}>
@@ -78,35 +79,18 @@ export function CasaConfigScreen() {
           </View>
         ))}
       </View>
+
+      {/* Botão Voltar */}
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.voltarButton}
+      >
+        <Feather name="arrow-left" size={14} color="#6B7280" />
+        <Text style={{ color: '#6B7280', fontWeight: 'bold' }}>
+          Voltar
+        </Text>
+      </TouchableOpacity>
+
     </ScrollView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F3F8FF' },
-  header: { alignItems: 'center', marginBottom: 12 },
-  headerImg: { width: '100%', height: 100, resizeMode: 'contain' },
-  title: { fontWeight: 'bold', fontSize: 28, marginTop: -20, color: '#166534' },
-  section: { marginHorizontal: 24, marginBottom: 24 },
-  label: { color: '#334155', fontWeight: 'bold', fontSize: 15, marginBottom: 3 },
-  itemRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  value: { fontSize: 16, color: '#222', fontWeight: '500' },
-  limparXpButton: {
-    backgroundColor: '#FEF2F2',
-    borderRadius: 8,
-    padding: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: 24,
-    marginBottom: 20
-  },
-  participanteRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 6,
-    padding: 10,
-    marginBottom: 10,
-    elevation: 1
-  }
-})
