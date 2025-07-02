@@ -14,6 +14,7 @@ import { TarefaListagem } from "../../types/tarefa";
 import { useTarefasContext } from "../../contexts/tarefas-context";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { StreakInfo } from "../../components/streak-info";
 
 export function HomeScreen() {
   const { reloadFlag, reload } = useTarefasContext()
@@ -145,6 +146,7 @@ export function HomeScreen() {
         )}
       </View>
 
+      <StreakInfo streakAtual={0} maiorStreak={12} />
       {/* <button onClick={signOut}>
         click
       </button> */}

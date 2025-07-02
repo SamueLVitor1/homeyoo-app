@@ -58,7 +58,10 @@ export const styles = StyleSheet.create({
   rankName: {
     fontSize: 14,
     fontWeight: '600',
-    marginVertical: 4
+    marginVertical: 4,
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center'
   },
   rankXp: {
     fontSize: 14,
@@ -84,7 +87,6 @@ export const styles = StyleSheet.create({
     height: 78,
     borderRadius: 24,
     marginBottom: 4,
-  }
-
+  },
 
 })
