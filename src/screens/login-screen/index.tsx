@@ -89,7 +89,7 @@ export function LoginScreen() {
                 placeholder="Email"
                 placeholderTextColor="#999"
                 value={value}
-                onChangeText={onChange}
+                onChangeText={text => onChange(text.replace(/\s/g, ""))}
               />
             )}
           />
@@ -106,7 +106,7 @@ export function LoginScreen() {
                   placeholderTextColor="#999"
                   secureTextEntry={!showPassword}
                   value={value}
-                  onChangeText={onChange}
+                  onChangeText={text => onChange(text.trim())}
                 />
                 <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                   <Feather name={showPassword ? 'eye' : 'eye-off'} size={20} color="#666" />

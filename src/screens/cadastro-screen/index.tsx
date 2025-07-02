@@ -119,7 +119,7 @@ export function CadastroScreen() {
                 placeholder="Email"
                 placeholderTextColor="#999"
                 value={value}
-                onChangeText={onChange}
+                onChangeText={text => onChange(text.replace(/\s/g, ""))}
               />
             )}
           />
@@ -137,7 +137,7 @@ export function CadastroScreen() {
                   placeholderTextColor="#999"
                   secureTextEntry={!showPassword}
                   value={value}
-                  onChangeText={onChange}
+                  onChangeText={text => onChange(text.trim())}
                 />
                 <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                   <Feather name={showPassword ? 'eye' : 'eye-off'} size={20} color="#666" />
@@ -159,7 +159,7 @@ export function CadastroScreen() {
                   placeholderTextColor="#999"
                   secureTextEntry={!showConfirmPassword}
                   value={value}
-                  onChangeText={onChange}
+                  onChangeText={text => onChange(text.trim())}
                 />
                 <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
                   <Feather name={showConfirmPassword ? 'eye' : 'eye-off'} size={20} color="#666" />
