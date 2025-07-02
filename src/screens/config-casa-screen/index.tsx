@@ -8,6 +8,7 @@ import { buscarCasaId } from '../../services/buscar-casa-id'
 import { ModalEditarNomeCasa } from '../../components/ModalEditarNomeCasa'
 import { atualizarCasa } from '../../services/atualizar-casa'
 import Toast from 'react-native-toast-message'
+import { ModalEditarMetaCasa } from '../../components/ModalEditarMetaCasa'
 // Importe o useAuth e outros hooks/contexts se precisar
 
 export function CasaConfigScreen() {
@@ -17,6 +18,7 @@ export function CasaConfigScreen() {
   const [loading, setLoading] = useState(true)
   const [modalNomeVisible, setModalNomeVisible] = useState(false)
   const [reload, setReload] = useState(0)
+  const [modalMetaVisible, setModalMetaVisible] = useState(false)
 
   async function handleSalvarNome(novoNome: string) {
     try {
@@ -27,6 +29,17 @@ export function CasaConfigScreen() {
       Toast.show({ type: 'success', text1: 'Nome atualizado com sucesso!' })
     } catch (e) {
       Toast.show({ type: 'error', text1: 'Erro ao atualizar nome' })
+    }
+  }
+
+  async function handleSalvarMeta(novaMeta: number) {
+    try {
+      await atualizarCasa(houseId || '', { metaAtual: novaMeta })
+      setModalMetaVisible(false)
+      setReload(1)
+      Toast.show({ type: 'success', text1: 'Meta atualizada com sucesso!' })
+    } catch (e) {
+      Toast.show({ type: 'error', text1: 'Erro ao atualizar meta' })
     }
   }
 
@@ -103,7 +116,7 @@ export function CasaConfigScreen() {
           <Text style={styles.label}>Meta Atual <Text>🏅</Text></Text>
           <View style={styles.itemRow}>
             <Text style={styles.value}>{casaa.metaAtual}xp</Text>
-            <TouchableOpacity onPress={handleEditMeta}>
+            <TouchableOpacity onPress={() => setModalMetaVisible(true)}>
               <Feather name="edit" size={16} color="#6366F1" />
             </TouchableOpacity>
           </View>
@@ -145,6 +158,14 @@ export function CasaConfigScreen() {
           nomeAtual={casa?.nome || ''}
           onClose={() => setModalNomeVisible(false)}
           onSalvar={handleSalvarNome}
+        />
+
+
+        <ModalEditarMetaCasa
+          visible={modalMetaVisible}
+          metaAtual={casaa?.metaAtual || 0}
+          onClose={() => setModalMetaVisible(false)}
+          onSalvar={handleSalvarMeta}
         />
       </ScrollView>
     )
