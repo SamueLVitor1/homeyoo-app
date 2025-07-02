@@ -62,7 +62,7 @@ export function UsuarioComCasa() {
       .finally(() => setLoadingTarefas(false))
   }, [houseId, showModal, reloadFlag])
 
-  if (loading || !casa) return <Text>Carregando...</Text>
+  if (loading || !casa) return <View></View>
 
 
   return (
