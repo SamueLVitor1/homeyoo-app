@@ -1,4 +1,5 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { Feather } from '@expo/vector-icons'
 import { tarefaItemStyles } from './styles'
 import { useState } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
@@ -15,28 +16,19 @@ interface TarefaItemProps {
 export function TarefaItem({ tarefa, isAtrasado }: TarefaItemProps) {
   const [showModalConcluir, setShowModalConcluir] = useState(false)
   const [tarefaSelecionada, setTarefaSelecionada] = useState(null)
-  const { fnReloadTarefas, reload } = useTarefasContext()
-
+  const { fnReloadTarefas } = useTarefasContext()
   const { user } = useAuth()
 
   async function handleConcluirTarefa() {
-    console.log(tarefaSelecionada.house_id)
-    console.log(tarefaSelecionada._id)
-
     try {
       await concluirTarefa({
         house_id: tarefaSelecionada.house_id,
         tarefa_id: tarefaSelecionada._id
       })
-
-
-      reload()
       setShowModalConcluir(false)
       setTarefaSelecionada(null)
       fnReloadTarefas()
     } catch (error) {
-      console.log(error)
-      // Aqui pode mostrar um Toast de erro se quiser
       Toast.show({
         type: 'error',
         text1: 'Erro ao concluir tarefa',
@@ -44,47 +36,54 @@ export function TarefaItem({ tarefa, isAtrasado }: TarefaItemProps) {
       })
     }
   }
-  console.log(user)
 
   return (
     <TouchableOpacity
+      activeOpacity={0.85}
       disabled={user._id !== tarefa.responsavel_id._id || !(tarefa.status === 'pendente' || tarefa.status === 'atrasada')}
       onPress={() => {
         setTarefaSelecionada(tarefa)
         setShowModalConcluir(true)
-      }}>
+      }}
+      style={{ width: '100%' }}
+    >
       <View style={tarefaItemStyles.tarefaItem}>
-        <View>
-          <Text style={tarefaItemStyles.tituloTarefa}>{tarefa.tarefa_id?.nome || 'Tarefa'}</Text>
-          <View style={tarefaItemStyles.responsavelContainer}>
-            {tarefa.responsavel_id?.avatar ? (
-              <Image
-                source={{ uri: tarefa.responsavel_id.avatar }}
-                style={tarefaItemStyles.responsavelImg}
-              />
-            ) : (
-              <Image
-                source={require('../../assets/profile-icon-default.png')}
-                style={tarefaItemStyles.responsavelImg}
-              />
-            )}
-            <Text>{tarefa.responsavel_id?.nome || '-'}</Text>
+        {/* Avatar + Nome */}
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+          <Image
+            source={
+              tarefa.responsavel_id?.avatar
+                ? { uri: tarefa.responsavel_id.avatar }
+                : require('../../assets/profile-icon-default.png')
+            }
+            style={tarefaItemStyles.responsavelImg}
+          />
+          <View>
+            <Text style={tarefaItemStyles.tituloTarefa}>{tarefa.tarefa_id?.nome || 'Tarefa'}</Text>
+            <Text style={tarefaItemStyles.responsavelNome}>{tarefa.responsavel_id?.nome || '-'}</Text>
           </View>
         </View>
-        <View style={{ alignItems: 'flex-end' }}>
-          {isAtrasado ? (
-            <View style={tarefaItemStyles.badgeAtrasado}>
-              <Text style={tarefaItemStyles.badgeAtrasadoText}>Atrasado</Text>
-            </View>
-          ) : (
-            <Text style={tarefaItemStyles.badgePendente}>
-              <Text style={tarefaItemStyles.badgePendenteText}>
-                {tarefa.status.charAt(0).toUpperCase() + tarefa.status.slice(1)}
-              </Text>
+        {/* Direita: status, data, xp */}
+        <View style={{ alignItems: 'flex-end', justifyContent: 'center', minWidth: 98 }}>
+          <View style={[
+            tarefaItemStyles.badgeStatus,
+            isAtrasado ? tarefaItemStyles.badgeAtrasado : tarefaItemStyles.badgePendente
+          ]}>
+            <Feather
+              name={isAtrasado ? 'alert-circle' : 'clock'}
+              size={16}
+              color={isAtrasado ? '#B23B3B' : '#A49620'}
+              style={{ marginRight: 3 }}
+            />
+            <Text style={[
+              tarefaItemStyles.badgeStatusText,
+              isAtrasado ? tarefaItemStyles.badgeAtrasadoText : tarefaItemStyles.badgePendenteText
+            ]}>
+              {isAtrasado ? 'Atrasado' : (tarefa.status.charAt(0).toUpperCase() + tarefa.status.slice(1))}
             </Text>
-          )}
+          </View>
           <Text style={tarefaItemStyles.dataLimite}>
-            até {new Date(tarefa.data_limite).toLocaleDateString('pt-BR')}
+            {isAtrasado ? 'Expirou em' : 'Até'} {new Date(tarefa.data_limite).toLocaleDateString('pt-BR')}
           </Text>
           <Text style={tarefaItemStyles.xpText}>
             +{tarefa.pontuacao}xp
@@ -98,7 +97,6 @@ export function TarefaItem({ tarefa, isAtrasado }: TarefaItemProps) {
         onConfirm={handleConcluirTarefa}
         tarefa={tarefaSelecionada}
       />
-
     </TouchableOpacity>
   )
 }

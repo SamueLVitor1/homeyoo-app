@@ -2,66 +2,79 @@ import { StyleSheet } from 'react-native'
 
 export const tarefaItemStyles = StyleSheet.create({
   tarefaItem: {
-    backgroundColor: '#E7F9F2',
-    padding: 12,
+    backgroundColor: '#F6FCFF',
+    paddingHorizontal: 2,
+    paddingRight: 6,
+    paddingVertical: 16,
     borderRadius: 20,
-    marginBottom: 8,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
+    marginBottom: 14,
+    shadowColor: '#1c3557',
+    shadowOpacity: 0.10,
+    shadowRadius: 8,
+    elevation: 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 8
+    alignItems: 'center'
   },
   tituloTarefa: {
-    fontSize: 16,
-    fontWeight: '600'
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#25313D'
   },
-  responsavelContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 7,
-    marginTop: 8
+  responsavelNome: {
+    fontSize: 12,
+    color: '#4C6780',
+    fontWeight: '500',
+    marginTop: 1
   },
   responsavelImg: {
-    width: 30,
-    height: 30
+    width: 38,
+    height: 38,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: '#E3EFFE',
+    backgroundColor: '#fff',
+    marginRight: 0
+  },
+  // Badge container (flex row p/ ícone + texto)
+  badgeStatus: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 18,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    marginBottom: 1,
+    marginTop: 2,
+    alignSelf: 'flex-end',
+    gap: 3
   },
   badgeAtrasado: {
-    backgroundColor: '#ffd5d5',   // rosa clarinho
-    paddingHorizontal: 14,
-    paddingVertical: 4,
-    borderRadius: 16,
-    alignSelf: 'flex-start',
-    marginTop: 2,
-  },
-  badgeAtrasadoText: {
-    color: '#312929',
-    fontWeight: '500',
-    fontSize: 15,
+    backgroundColor: '#FFE4E6'
   },
   badgePendente: {
-    backgroundColor: '#fef9c3',   // amarelinho claro
-    paddingHorizontal: 14,
-    paddingVertical: 4,
-    borderRadius: 16,
-    alignSelf: 'flex-start',
-    marginTop: 2,
+    backgroundColor: '#FFF9C9'
+  },
+  badgeStatusText: {
+    fontWeight: '600',
+    fontSize: 13.5,
+    marginLeft: 2,
+    letterSpacing: 0.1
+  },
+  badgeAtrasadoText: {
+    color: '#B23B3B'
   },
   badgePendenteText: {
-    color: '#312929',
-    fontWeight: '500',
-    fontSize: 15,
+    color: '#A49620'
   },
-  // Extras do bloco direito
   dataLimite: {
     fontSize: 12,
-    color: '#888',
+    color: '#8391A1',
+    marginTop: 2
   },
   xpText: {
-    fontSize: 12,
-    color: '#4834d4',
-    fontWeight: 'bold'
+    fontSize: 13,
+    color: '#5F34D4',
+    fontWeight: 'bold',
+    marginTop: 2
   }
 })

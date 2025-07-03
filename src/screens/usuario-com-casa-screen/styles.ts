@@ -25,7 +25,8 @@ export const styles = StyleSheet.create({
   nomeCasa: {
     fontSize: 34,
     fontWeight: 'bold',
-    color: '#14532D'
+    color: '#14532D',
+    textAlign: 'center'
   },
   codigoCasa: {
     fontSize: 16,
