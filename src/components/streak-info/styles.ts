@@ -11,6 +11,12 @@ export const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 2,
     shadowOffset: { width: 0, height: 3 },
+    position: 'absolute',
+    left: 24,
+    right: 24,
+    bottom: 100,
+    zIndex: 100,
+    alignSelf: 'center',
   },
   fireBg: {
     backgroundColor: "#fffbea",

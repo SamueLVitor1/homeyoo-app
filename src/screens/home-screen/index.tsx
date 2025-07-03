@@ -115,40 +115,44 @@ export function HomeScreen() {
               Organize a rotina da sua casa adicionando novas tarefas!
             </Text>
           </View>
-        ) : (
-          tarefasPendentes.slice(0, 3).map((t) => (
-            <View key={t._id} style={{
-              backgroundColor: '#F5F5F5',
-              borderRadius: 12,
-              padding: 10,
-              marginVertical: 5,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-            }}>
-              <View>
-                <Text style={{ fontWeight: '600', fontSize: 15 }}>{t.tarefa_id?.nome || 'Tarefa'}</Text>
-                <Text style={{ color: '#888', fontSize: 13 }}>
-                  {formatarData(t.data_limite || '')}
-                </Text>
-              </View>
-              <View>
-                <Text style={{
-                  backgroundColor: '#eee',
-                  borderRadius: 8,
-                  paddingHorizontal: 12,
-                  paddingVertical: 4,
-                  color: '#666'
-                }}>
-                  {t.status.charAt(0).toUpperCase() + t.status.slice(1)}
-                </Text>
-              </View>
+        ) : tarefasPendentes.slice(0, 3).map((t) => (
+          <View key={t._id} style={styles.tarefaCard}>
+            <View style={styles.tarefaCardIcon}>
+              <Feather name="clipboard" size={22} color="#3269e7" />
             </View>
-          ))
-        )}
+            <View style={styles.tarefaCardTextContainer}>
+              <Text style={styles.tarefaCardTitle}>
+                {t.tarefa_id?.nome || 'Tarefa'}
+              </Text>
+              <Text style={styles.tarefaCardDate}>
+                {formatarData(t.data_limite || '')}
+              </Text>
+            </View>
+            <View style={[
+              styles.tarefaCardBadge,
+              t.status === 'pendente'
+                ? styles.tarefaCardBadgePendente
+                : styles.tarefaCardBadgeConcluida
+            ]}>
+              <Feather
+                name={t.status === 'pendente' ? 'clock' : 'check'}
+                size={15}
+                color={t.status === 'pendente' ? '#F7B731' : '#3BA776'}
+              />
+              <Text style={
+                t.status === 'pendente'
+                  ? styles.tarefaCardBadgeTextPendente
+                  : styles.tarefaCardBadgeTextConcluida
+              }>
+                {t.status.charAt(0).toUpperCase() + t.status.slice(1)}
+              </Text>
+            </View>
+          </View>
+        ))}
+
       </View>
 
-      <StreakInfo />
+      <StreakInfo  />
     </LinearGradient>
   )
 }
