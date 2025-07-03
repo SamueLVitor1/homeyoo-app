@@ -96,13 +96,15 @@ export function UsuarioComCasa() {
 
           {/* Membros */}
           <View style={styles.membrosContainer}>
-            {loading ? (
-              <Text>Carregando...</Text>
-            ) : (
-              membros.map((m: any, i: number) => (
-                <MembroItem key={i} membro={m} />
-              ))
-            )}
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {loading ? (
+                <Text>Carregando...</Text>
+              ) : (
+                membros.map((m: any, i: number) => (
+                  <MembroItem key={i} membro={m} />
+                ))
+              )}
+            </ScrollView>
           </View>
 
           {/* Tarefas */}
@@ -142,7 +144,7 @@ export function UsuarioComCasa() {
       <ModalNovaTarefa
         visible={showModal}
         onClose={() => setShowModal(false)}
-        membros={membros} 
+        membros={membros}
       />
     </ScrollView>
   )

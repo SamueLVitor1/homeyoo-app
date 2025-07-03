@@ -36,8 +36,8 @@ export const styles = StyleSheet.create({
   },
   membrosContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 24
+    marginBottom: 24,
+    marginLeft: -8,
   },
   tarefasContainer: {
     marginBottom: 24

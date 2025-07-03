@@ -1,22 +1,32 @@
-import { View, Text, Image } from 'react-native'
-import { membroItemStyles } from './styles'
+import { View, Text, Image } from "react-native";
+import { Feather } from '@expo/vector-icons';
+import { styles } from './styles'; // estilos novos abaixo
 
-interface MembroItemProps {
-  membro: any
-}
+export function MembroItem({ membro }: any) {
+  // Exemplo de papel/admin
+  const isAdmin = membro.papel === 'admin'
+  // Pode marcar "você mesmo" comparando com o user logado
 
-export function MembroItem({ membro }: MembroItemProps) {
   return (
-    <View style={membroItemStyles.membroItem}>
-      <Image
-        source={
-          membro.avatar
+    <View style={styles.membroCard}>
+      <View style={styles.avatarBox}>
+        <Image
+          source={membro.avatar
             ? { uri: membro.avatar }
             : require('../../assets/profile-icon-default.png')
-        }
-        style={membroItemStyles.avatar}
-      />
-      <Text style={membroItemStyles.nome}>{membro.nome}</Text>
+          }
+          style={styles.avatarImg}
+        />
+        {isAdmin && (
+          <View style={styles.adminBadge}>
+            <Feather name="star" size={13} color="#fff" />
+          </View>
+        )}
+      </View>
+      <Text style={styles.membroNome} numberOfLines={1}>
+        {membro.nome}
+      </Text>
+      {/* <Text style={styles.membroPapel}>{membro.papel}</Text> */}
     </View>
   )
 }
