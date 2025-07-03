@@ -22,7 +22,14 @@ const tarefaSchema = z.object({
   tarefa: z.string().min(1, 'Escolha a tarefa'),
   responsavel: z.string().min(1, 'Escolha o responsável'),
   dataEntrega: z.string().min(1, 'Informe a data'),
-  pontos: z.string().min(1, 'Informe os pontos'),
+  pontos: z.string()
+    .min(1, 'Informe os pontos')
+    .refine((val) => {
+      const n = Number(val)
+      return !isNaN(n) && n > 0 && n <= 100
+    }, {
+      message: 'Pontos deve ser de 1 a 100'
+    }),
 })
 
 type FormData = z.infer<typeof tarefaSchema>
@@ -40,6 +47,13 @@ export function ModalNovaTarefa({ visible, onClose, membros }: ModalNovaTarefaPr
 
   const houseId = user?.casas?.[0]?.house_id
   const { fnReloadTarefas } = useTarefasContext()
+
+  function formatarDataBR(dataISO: string | undefined) {
+    if (!dataISO) return ''
+    const [ano, mes, dia] = dataISO.split('-')
+    if (!ano || !mes || !dia) return ''
+    return `${dia}/${mes}/${ano}`
+  }
 
   useEffect(() => {
     if (!visible) return
@@ -132,8 +146,9 @@ export function ModalNovaTarefa({ visible, onClose, membros }: ModalNovaTarefaPr
                   <TextInput
                     style={styles.input}
                     placeholder="Data de Entrega"
-                    value={value}
+                    value={formatarDataBR(value)}
                     editable={false}
+                    pointerEvents="none"
                   />
                 </TouchableOpacity>
                 {showDatePicker && (
@@ -143,7 +158,11 @@ export function ModalNovaTarefa({ visible, onClose, membros }: ModalNovaTarefaPr
                     display="default"
                     onChange={(event, date) => {
                       setShowDatePicker(false)
-                      if (date) onChange(date.toISOString().split('T')[0])
+                      if (date) {
+                        // Salva no formato yyyy-mm-dd (compatível com schema)
+                        const iso = date.toISOString().split('T')[0]
+                        onChange(iso)
+                      }
                     }}
                   />
                 )}
