@@ -1,8 +1,8 @@
 import { createContext, useContext, useState } from 'react'
 
 interface TarefasContextType {
-  reload: () => void
-  reloadFlag: number,
+  fnreloadCasa: () => void
+  reloadCasa: number,
   tarefasReload: number,
   fnReloadTarefas: () => void
 }
@@ -10,11 +10,11 @@ interface TarefasContextType {
 const TarefasContext = createContext<TarefasContextType>({} as any)
 
 export function TarefasProvider({ children }: { children: React.ReactNode }) {
-  const [reloadFlag, setReloadFlag] = useState(0)
+  const [reloadCasa, setReloadCasa] = useState(0)
   const [tarefasReload, setTarefasReload] = useState(0)
 
-  function reload() {
-    setReloadFlag(flag => flag + 1)
+  function fnreloadCasa() {
+    setReloadCasa(flag => flag + 1)
   }
 
   function fnReloadTarefas() {
@@ -22,7 +22,7 @@ export function TarefasProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <TarefasContext.Provider value={{ reload, reloadFlag, fnReloadTarefas, tarefasReload }}>
+    <TarefasContext.Provider value={{ fnreloadCasa, reloadCasa, fnReloadTarefas, tarefasReload }}>
       {children}
     </TarefasContext.Provider>
   )

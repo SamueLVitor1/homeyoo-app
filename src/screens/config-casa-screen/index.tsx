@@ -11,6 +11,7 @@ import Toast from 'react-native-toast-message'
 import { ModalEditarMetaCasa } from '../../components/ModalEditarMetaCasa'
 import { removerMembroCasa } from '../../services/remover-membro'
 import { ModalRemoverMembro } from '../../components/ModalRemoverMembro'
+import { useTarefasContext } from '../../contexts/tarefas-context'
 // Importe o useAuth e outros hooks/contexts se precisar
 
 export function CasaConfigScreen() {
@@ -22,6 +23,7 @@ export function CasaConfigScreen() {
   const [reload, setReload] = useState(0)
   const [modalMetaVisible, setModalMetaVisible] = useState(false)
   const [modalRemover, setModalRemover] = useState({ visible: false, nome: '', userId: '' })
+  const { fnreloadCasa } = useTarefasContext()
 
   function openRemoverModal(participante: any) {
     setModalRemover({ visible: true, nome: participante.nome, userId: participante.user_id })
@@ -33,6 +35,7 @@ export function CasaConfigScreen() {
       setModalRemover({ visible: false, nome: '', userId: '' })
       setReload(1)
       Toast.show({ type: 'success', text1: 'Membro removido com sucesso!' })
+      fnreloadCasa()
     } catch (e) {
       Toast.show({ type: 'error', text1: 'Erro ao remover membro' })
     }
@@ -45,6 +48,7 @@ export function CasaConfigScreen() {
       // Depois recarregue os dados da casa para atualizar o nome na tela!
       setReload(1)
       Toast.show({ type: 'success', text1: 'Nome atualizado com sucesso!' })
+      fnreloadCasa()
     } catch (e) {
       Toast.show({ type: 'error', text1: 'Erro ao atualizar nome' })
     }
@@ -56,6 +60,7 @@ export function CasaConfigScreen() {
       setModalMetaVisible(false)
       setReload(1)
       Toast.show({ type: 'success', text1: 'Meta atualizada com sucesso!' })
+      fnreloadCasa()
     } catch (e) {
       Toast.show({ type: 'error', text1: 'Erro ao atualizar meta' })
     }

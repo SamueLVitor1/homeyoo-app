@@ -14,7 +14,7 @@ import { PodioRanking } from '../../components/podio-ranking'
 import { useNavigation } from '@react-navigation/native'
 
 export function UsuarioComCasa() {
-  const { tarefasReload } = useTarefasContext()
+  const { tarefasReload, reloadCasa } = useTarefasContext()
   const { user } = useAuth()
   const houseId = user?.casas?.[0]?.house_id
   const papel = user?.casas?.[0]?.papel
@@ -50,7 +50,7 @@ export function UsuarioComCasa() {
     }
     fetchCasa()
     fetchMembros()
-  }, [houseId])
+  }, [houseId, reloadCasa])
 
   useEffect(() => {
     if (!houseId) return

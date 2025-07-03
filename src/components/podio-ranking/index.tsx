@@ -13,7 +13,7 @@ export function PodioRanking() {
   const [ranking, setRanking] = useState<any[]>([])
   const [metaXp, setMetaXp] = useState<number>(0)
   const [loading, setLoading] = useState(true)
-  const { tarefasReload } = useTarefasContext()
+  const { tarefasReload, reloadCasa } = useTarefasContext()
 
   useEffect(() => {
     async function fetchRanking() {
@@ -32,7 +32,7 @@ export function PodioRanking() {
       setLoading(false)
     }
     fetchRanking()
-  }, [houseId, tarefasReload])
+  }, [houseId, tarefasReload, reloadCasa])
 
   if (loading) return <Text>Carregando rank...</Text>
 
