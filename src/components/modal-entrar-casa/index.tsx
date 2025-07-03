@@ -45,7 +45,7 @@ export function ModalEntrarCasa({ visible, onClose }: ModalEntrarCasaProps) {
       Toast.show({
         type: "success",
         text1: "Você entrou na casa com sucesso!",
-        position: "bottom",
+        position: "top",
       })
 
       reset()
@@ -57,7 +57,7 @@ export function ModalEntrarCasa({ visible, onClose }: ModalEntrarCasaProps) {
         type: "error",
         text1: "Erro ao entrar na casa",
         text2: "Tente novamente mais tarde.",
-        position: "bottom",
+        position: "top",
       })
     }
   }

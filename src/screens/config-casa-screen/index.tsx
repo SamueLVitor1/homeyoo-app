@@ -87,12 +87,6 @@ export function CasaConfigScreen() {
 
 
   const navigation = useNavigation<any>()
-  // Handler para editar nome/meta/código
-  const handleEditNome = () => { /* abre input/modal */ }
-  const handleEditMeta = () => { /* abre input/modal */ }
-  const handleCopiarCodigo = () => { /* copia código */ }
-  const handleLimparXP = () => { /* limpa xp de todos */ }
-  const handleRemoverParticipante = (id: any) => { /* remove participante */ }
 
   if (loading) {
     return <Text>Carregando</Text>
@@ -119,7 +113,7 @@ export function CasaConfigScreen() {
           <Text style={styles.label}>Código da casa:</Text>
           <View style={styles.itemRow}>
             <Text style={[styles.value, { color: '#3B82F6' }]}>#{casaa.codigo}</Text>
-            <TouchableOpacity onPress={handleCopiarCodigo} style={{ marginLeft: 8 }}>
+            <TouchableOpacity style={{ marginLeft: 8 }}>
               <Feather name="copy" size={16} color="#6366F1" />
             </TouchableOpacity>
           </View>
@@ -137,7 +131,7 @@ export function CasaConfigScreen() {
         </View>
 
         {/* Limpar XP */}
-        <TouchableOpacity style={styles.limparXpButton} onPress={handleLimparXP}>
+        <TouchableOpacity style={styles.limparXpButton}>
           <Feather name="alert-triangle" size={18} color="#DC2626" style={{ marginRight: 10 }} />
           <Text style={styles.limparXpText}>Limpar XP dos participantes da casa</Text>
         </TouchableOpacity>

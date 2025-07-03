@@ -38,7 +38,7 @@ export function ModalCriarCasa({ visible, onClose }: ModalCriarCasaProps) {
       Toast.show({
         type: "success",
         text1: "Casa criada com sucesso!",
-        position: "bottom",
+        position: "top",
       })
 
       reset()
@@ -50,7 +50,7 @@ export function ModalCriarCasa({ visible, onClose }: ModalCriarCasaProps) {
         type: "error",
         text1: "Erro ao criar casa",
         text2: "Tente novamente mais tarde.",
-        position: "bottom",
+        position: "top",
       })
     }
   }
