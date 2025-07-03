@@ -3,6 +3,16 @@ export interface CasaUsuario {
   papel: 'admin' | 'membro'
 }
 
+export interface Medalha {
+  nome: string
+  displayName: string
+  iconeUrl: string
+  pontosNecessarios: number
+  pontosUsuario: number
+  habilitado: boolean
+  dataConquista: string | null 
+}
+
 export interface Usuario {
   _id?: string
   nome: string
@@ -10,8 +20,9 @@ export interface Usuario {
   senha_hash: string
   avatar?: string
   casas: CasaUsuario[]
-  streakAtual?: number        
-  maiorStreak?: number           
-  ultimoDiaStreak?: string | null  
-  data_criacao?: string
+  streakAtual?: number
+  maiorStreak?: number
+  ultimoDiaStreak?: string | null
+  data_criacao?: string,
+  medalhas?: Medalha[] 
 }
